@@ -7,7 +7,7 @@
 本 runbook 把“Hermes / harness 方法有没有更新”变成一个可重复执行的仓库流程。
 
 核心目标不是盲目升级 runtime，而是：
-1. 先确认本仓库和 Hermes runtime 的真实更新状态
+1. 先确认本仓库、Hermes runtime 和外部方法来源的真实更新状态
 2. 只提炼对 harness 方法有长期价值的变化
 3. 把变化同步为仓库工件、检查脚本、playbook 或 debt
 4. 让未来 Hermes 使用本仓库时能自动走同一套方法
@@ -118,6 +118,7 @@ python3 scripts/check_method_update_sources.py \
 | 新的 cron / webhook / background 能力 | maintenance runbook、run registry 规则、长期任务 handoff 规则 |
 | 新的工具安全 / approval 能力 | CONTRIBUTING、操作模型、相关验证规则 |
 | 新的可机械化检查 | `scripts/check_control_plane.py`、`tests/structure/`、必要时新增脚本测试 |
+| 外部 workflow pack 方法 | `docs/runbooks/agent-skills-method-intake.md`、`docs/references/agent-skills-crosswalk.md`、相关 playbook / template / structure tests |
 
 ### 4. 同步 companion surfaces
 
@@ -130,6 +131,7 @@ python3 scripts/check_method_update_sources.py \
 - 受影响 playbook / runbook
 - `docs/tech-debt-tracker.md`
 - `docs/QUALITY_SCORE.md`
+- `docs/references/agent-skills-crosswalk.md`（当变化来自外部 workflow pack 时）
 - `scripts/check_control_plane.py`
 - `tests/structure/test_harness_repo.py`
 

@@ -59,8 +59,10 @@
 - `docs/playbooks/multi-agent-product-ops.md`：多 agent 协作与产品运营项目方法
 - `docs/runbooks/hermes-codex-runtime-recovery.md`：Hermes + Codex 故障恢复入口
 - `scripts/hermes_codex_runtime_recovery.py`：Hermes + Codex 诊断 / apply 脚本
-- `docs/runbooks/hermes-method-update-sync.md`：Hermes / harness 方法更新同步流程
-- `scripts/check_method_update_sources.py`：Hermes / harness 更新源只读检查脚本
+- `docs/runbooks/hermes-method-update-sync.md`：如何检查并同步 Hermes / harness 方法更新
+- `docs/runbooks/agent-skills-method-intake.md`：如何把 agent-skills 这类外部 workflow pack 转成 harness 方法
+- `docs/references/agent-skills-crosswalk.md`：agent-skills 方法到本仓库 surface 的映射
+- `scripts/check_method_update_sources.py`：Hermes / harness / agent-skills 更新源只读检查脚本
 - `docs/runbooks/add-project-type-playbook.md`：新增项目类型方法的标准流程
 - `docs/runbooks/maintenance-review.md`：持续维护与更新流程
 

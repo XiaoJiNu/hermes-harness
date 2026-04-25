@@ -20,6 +20,8 @@
 - `docs/catalog/project-types.md`：如何选择哪个 harness 方法
 - `docs/runbooks/`：如何新增、维护和扩展方法
 - `docs/runbooks/hermes-method-update-sync.md`：如何检查并同步 Hermes / harness 方法更新
+- `docs/runbooks/agent-skills-method-intake.md`：如何 intake agent-skills 这类外部方法来源
+- `docs/references/agent-skills-crosswalk.md`：外部 skill 方法到本仓库 surface 的映射
 - `docs/plans/active/`：当前正在推进的计划
 
 ## 核心规则

@@ -10,8 +10,11 @@
 2. 当前结构检查仍偏轻量
    - 后续可增加对目录交叉引用、模板使用、质量分更新的更强校验
 
-3. 尚未建立外部来源索引自动提炼能力
-   - 后续可增加来源清单与更新脚本
+3. ~~尚未建立外部来源索引自动提炼能力~~ **部分解决 2026-04-25**
+   - 已新增 `docs/runbooks/agent-skills-method-intake.md`
+   - 已新增 `docs/references/agent-skills-crosswalk.md`
+   - `scripts/check_method_update_sources.py` 已能检测 agent-skills 的 skill / command / persona / hook / license surface
+   - 剩余缺口：还没有自动把外部 release notes 提炼成候选方法 diff
 
 4. ~~当前缺少针对 runtime 网络链路问题的标准诊断 runbook~~ **已解决 2026-04-15**
    - 审计记录：`docs/audits/2026-04-15-hermes-codex-tun-instability.md`

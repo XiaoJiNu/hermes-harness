@@ -44,6 +44,7 @@
 - 更新已有方法
 - 增强机械化约束
 - 同步 Hermes / harness 方法更新
+- intake agent-skills 或其他外部 workflow pack
 
 如果用户明确要求“看看 Hermes 或 harness 有没有更新”，先执行：
 
@@ -58,6 +59,16 @@ python3 scripts/check_method_update_sources.py --fetch --json
 ```
 
 然后按 `docs/runbooks/hermes-method-update-sync.md` 过滤“有方法价值”的更新。
+
+如果用户明确要求集成 `agent-skills`，先按：
+
+```bash
+python3 scripts/check_method_update_sources.py \
+  --agent-skills-root /path/to/agent-skills \
+  --json
+```
+
+然后按 `docs/runbooks/agent-skills-method-intake.md` 和 `docs/references/agent-skills-crosswalk.md` 做外部方法 intake。`agent-skills` 只能作为 external method source，不能绕过本仓库 source of truth。
 
 ### 第 2 步：重建仓库上下文
 
@@ -132,6 +143,19 @@ Hermes 的新功能只有在能稳定提升 harness 方法时才进入本仓库�
 - provider / model / timeout：属于 runtime 决策，不写死到方法层；但项目可记录推荐档位、fallback、timeout 和成本约束
 - cron / webhook / background：长期任务 prompt 必须自足，默认最小 toolsets，background 任务优先设置 watch_patterns
 - plugin / shell hook：只有稳定、重复、可验证的规则才固化；必须有 runbook、回滚说明和测试
+- 外部 workflow pack：先做 license / structure / runtime-assumption intake；只把有长期价值的方法改写进本仓库 surface，不直接采用外部 hook、plugin、AGENTS 或 slash command 路径
+
+## 外部方法来源采用规则
+
+`agent-skills` 这类仓库属于 external method source。采用时必须遵守：
+
+1. 本仓库仍是 source of truth
+2. 先读 `docs/runbooks/agent-skills-method-intake.md`
+3. 先更新 `docs/references/agent-skills-crosswalk.md` 或说明无需更新
+4. 区分 `skill / persona / command` 与 hook / plugin runtime packaging
+5. 外部路径必须适配成本仓库路径：`docs/specs/`、`docs/plans/active/`、`docs/runbooks/`、`docs/playbooks/`
+6. copied content 必须满足 license 要求；默认优先提炼和改写方法而不是 vendoring
+7. 完成后运行结构验证和 source checker 测试
 
 坏的结果包括：
 - 只给泛泛建议，不落到具体文档

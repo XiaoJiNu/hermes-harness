@@ -49,6 +49,39 @@ harness 决定：
 - 如果要定时执行：cron prompt 必须自足，并只启用必要 toolsets
 - 如果要固化自动化：优先从 runbook + script + test 开始，再考虑 plugin / shell hook
 - 如果用户问“有没有更新”：先按 `docs/runbooks/hermes-method-update-sync.md` 检查，不要凭记忆回答
+- 如果用户要求 intake `agent-skills` 或类似 workflow pack：按 `docs/runbooks/agent-skills-method-intake.md`，先把外部方法映射到本仓库 source-of-truth surfaces
+
+## 任务级 workflow selection
+
+本仓库先做“项目级 harness 选择”，再做“任务级 workflow 选择”。
+这吸收了 `agent-skills` 的有用部分，但不把外部仓库作为 source of truth。
+
+标准顺序：
+
+1. 先按 `docs/catalog/project-types.md` 判断项目类型
+2. 读取对应 playbook / runbook / spec / active plan
+3. 再判断当前动作属于哪个 task-level workflow
+4. 把结果写回本仓库工件，而不是只留在聊天里
+
+| 当前动作 | 采用的 task-level workflow | 本仓库落点 |
+|---|---|---|
+| 想法模糊 | idea refine / requirement clarification | `docs/specs/` 或 active plan 的 open questions |
+| 新项目 / 新功能 / 大改动 | spec-driven development | `docs/specs/`，必要时 ADR |
+| 已有 spec，需要拆解 | planning and task breakdown | `docs/plans/active/` |
+| 多文件实现 | incremental implementation | bounded batch + verification |
+| 行为变化 / bugfix | test-driven development | 先写/更新测试，再实现 |
+| 测试失败 / 异常行为 | debugging and error recovery | reproduce / localize / fix / guard |
+| 合并前检查 | code review and quality | diff review + verification story |
+| 发布 / 交付 | shipping and launch | go/no-go + rollback plan |
+
+每个 task-level workflow 都应包含：
+
+- When to use / when not to use
+- Inputs
+- Process
+- Common rationalizations（agent 容易跳步的借口）
+- Red flags
+- Verification evidence
 
 ## 所有新项目都建议具备的最小骨架
 

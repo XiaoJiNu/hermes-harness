@@ -44,3 +44,38 @@ def test_build_recommendations_warns_before_runtime_update_when_dirty():
     assert any("behind origin/main by 1778" in item for item in recommendations)
     assert any("do not run hermes update" in item for item in recommendations)
     assert "Update available: 1778 commits behind" in recommendations
+
+
+def test_detect_agent_skills_root_honors_explicit_path(tmp_path):
+    mod = _load_module()
+    root = tmp_path / "agent-skills"
+    root.mkdir()
+
+    assert mod.detect_agent_skills_root(str(root)) == root
+
+
+def test_agent_skills_report_counts_pack_surfaces(tmp_path):
+    mod = _load_module()
+    root = tmp_path / "agent-skills"
+    (root / "skills" / "spec-driven-development").mkdir(parents=True)
+    (root / "skills" / "spec-driven-development" / "SKILL.md").write_text(
+        "---\nname: spec-driven-development\ndescription: Creates specs before coding. Use when starting a feature.\n---\n",
+        encoding="utf-8",
+    )
+    (root / ".claude" / "commands").mkdir(parents=True)
+    (root / ".claude" / "commands" / "spec.md").write_text("/spec", encoding="utf-8")
+    (root / "agents").mkdir()
+    (root / "agents" / "code-reviewer.md").write_text("# reviewer", encoding="utf-8")
+    (root / "hooks").mkdir()
+    (root / "hooks" / "session-start.sh").write_text("#!/bin/bash\n", encoding="utf-8")
+    (root / "LICENSE").write_text("MIT License\n", encoding="utf-8")
+
+    report = mod.agent_skills_report(root)
+
+    assert report.exists is True
+    assert report.skill_count == 1
+    assert report.command_count == 1
+    assert report.persona_count == 1
+    assert report.hook_count == 1
+    assert report.license == "MIT"
+    assert report.invalid_skills == []

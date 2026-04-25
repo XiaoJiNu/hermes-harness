@@ -39,6 +39,39 @@
 - 子任务完成后必须回写 plan、summary、registry 或 review surface
 - 不允许把关键状态只留在会话里
 
+## skill / persona / command 分层
+
+吸收 `agent-skills` 的分层，但保持 runtime-agnostic：
+
+| 层 | 作用 | 本仓库约束 |
+|---|---|---|
+| skill | 定义 how：流程、步骤、验证、red flags | 写入 playbook / runbook / template，不依赖某个 runtime |
+| persona | 定义 who：reviewer、security-auditor、test-engineer 等单一视角 | persona 只产出自己的报告，不调用其他 persona |
+| command | 定义 when：用户或 runbook 触发某个组合流程 | 不复制 Claude slash command；改写成 runbook entrypoint |
+
+组合规则：
+
+1. 用户、Hermes 主会话或 runbook 是 orchestrator
+2. persona 不做 router，也不调用另一个 persona
+3. 只有子任务相互独立、无共享可变状态时，才做 parallel fan-out
+4. fan-out 后由主会话 merge 报告，产出统一结论和 verification story
+5. `router persona`、深层 persona tree、纯转述型 sequential orchestrator 都是反模式
+
+### 推荐 fan-out review 模式
+
+发布或合并前，如果变更有非平凡风险，可以并发获得三个独立视角：
+
+- code-reviewer：correctness / readability / architecture / performance
+- security-auditor：secrets / auth / input validation / dependency risk
+- test-engineer：coverage gaps / regression risk / missing edge cases
+
+主会话负责合并：
+
+- 去重 blocker
+- 标注哪些是必须修复，哪些是建议
+- 记录运行了哪些测试
+- 给出 go/no-go 和 rollback plan
+
 ### 子代理编排约束
 
 当 Hermes 使用 subagent / delegation 时，必须先写清：

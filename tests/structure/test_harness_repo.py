@@ -22,7 +22,10 @@ def test_required_control_plane_files_exist():
         "docs/runbooks/maintenance-review.md",
         "docs/runbooks/hermes-codex-runtime-recovery.md",
         "docs/runbooks/hermes-method-update-sync.md",
+        "docs/runbooks/agent-skills-method-intake.md",
         "docs/decisions/0001-hermes-default-runtime-not-exclusive.md",
+        "docs/decisions/0002-agent-skills-external-method-source.md",
+        "docs/references/agent-skills-crosswalk.md",
         "docs/audits/2026-04-14-initial-state.md",
         "docs/tech-debt-tracker.md",
         "docs/QUALITY_SCORE.md",
@@ -57,6 +60,9 @@ def test_docs_index_links_to_key_playbooks_and_runbooks():
         "docs/runbooks/maintenance-review.md",
         "docs/runbooks/hermes-codex-runtime-recovery.md",
         "docs/runbooks/hermes-method-update-sync.md",
+        "docs/runbooks/agent-skills-method-intake.md",
+        "docs/decisions/0002-agent-skills-external-method-source.md",
+        "docs/references/agent-skills-crosswalk.md",
         "scripts/hermes_codex_runtime_recovery.py",
         "scripts/check_method_update_sources.py",
     ]
@@ -94,3 +100,40 @@ def test_entry_doc_points_to_canonical_docs():
     ]
     missing_refs = [ref for ref in required_refs if ref not in entry_doc]
     assert not missing_refs, f"Entry doc is missing canonical references: {missing_refs}"
+
+
+def test_agent_skills_intake_preserves_harness_boundaries():
+    decision = (ROOT / "docs/decisions/0002-agent-skills-external-method-source.md").read_text(encoding="utf-8")
+    crosswalk = (ROOT / "docs/references/agent-skills-crosswalk.md").read_text(encoding="utf-8")
+    runbook = (ROOT / "docs/runbooks/agent-skills-method-intake.md").read_text(encoding="utf-8")
+    operating_model = (ROOT / "docs/hermes-harness-operating-model.md").read_text(encoding="utf-8")
+    multi_agent = (ROOT / "docs/playbooks/multi-agent-product-ops.md").read_text(encoding="utf-8")
+
+    assert "external method source" in decision
+    assert "not source of truth" in decision
+    assert "Claude plugin" in decision
+    assert "runtime-agnostic" in decision
+
+    for skill_name in [
+        "using-agent-skills",
+        "spec-driven-development",
+        "planning-and-task-breakdown",
+        "context-engineering",
+        "shipping-and-launch",
+    ]:
+        assert skill_name in crosswalk
+
+    for harness_surface in [
+        "docs/specs/",
+        "docs/plans/active/",
+        "docs/runbooks/",
+        "docs/playbooks/",
+    ]:
+        assert harness_surface in crosswalk
+
+    assert "git@github.com:addyosmani/agent-skills.git" in runbook
+    assert "license" in runbook.lower()
+    assert "不直接采用" in runbook
+    assert "agent-skills" in operating_model
+    assert "skill / persona / command" in multi_agent
+    assert "router persona" in multi_agent

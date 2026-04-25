@@ -31,6 +31,8 @@
 - `docs/audits/2026-04-14-initial-state.md`
 - `docs/audits/2026-04-15-hermes-codex-tun-instability.md`
 - `docs/decisions/0001-hermes-default-runtime-not-exclusive.md`
+- `docs/decisions/0002-agent-skills-external-method-source.md`
+- `docs/references/agent-skills-crosswalk.md`
 
 ### 运行手册与模板
 - `docs/runbooks/add-project-type-playbook.md`
@@ -39,7 +41,8 @@
 - `docs/runbooks/hermes-codex-proxy-setup.md`：Hermes + Codex system proxy 配置与重启后失效修复
 - `scripts/hermes_codex_runtime_recovery.py`：Hermes + Codex 诊断 / apply 脚本
 - `docs/runbooks/hermes-method-update-sync.md`：Hermes / harness 方法更新同步流程
-- `scripts/check_method_update_sources.py`：Hermes / harness 更新源只读检查脚本
+- `docs/runbooks/agent-skills-method-intake.md`：agent-skills 外部方法来源 intake 流程
+- `scripts/check_method_update_sources.py`：Hermes / harness / agent-skills 更新源只读检查脚本
 - `docs/templates/project-type-playbook-template.md`
 
 ### 健康度
