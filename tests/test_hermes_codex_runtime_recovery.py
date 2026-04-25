@@ -72,3 +72,28 @@ def test_resolve_proxy_values_uses_proxy_port_when_env_missing():
     assert resolved["HTTPS_PROXY"] == "http://127.0.0.1:7897"
     assert resolved["ALL_PROXY"] == "socks5://127.0.0.1:7897"
     assert resolved["NO_PROXY"] == "localhost,127.0.0.1,::1"
+
+
+def test_check_source_timeout_fix_accepts_legacy_and_current_markers(tmp_path):
+    mod = _load_module()
+
+    legacy_root = tmp_path / "legacy"
+    legacy_root.mkdir()
+    (legacy_root / "run_agent.py").write_text("_codex_stream_timeout\n", encoding="utf-8")
+    assert mod.check_source_timeout_fix(legacy_root) is True
+
+    current_root = tmp_path / "current"
+    current_root.mkdir()
+    (current_root / "run_agent.py").write_text(
+        "request_timeout_seconds\n"
+        "get_provider_request_timeout\n"
+        "_create_request_openai_client\n"
+        "_run_codex_stream\n",
+        encoding="utf-8",
+    )
+    assert mod.check_source_timeout_fix(current_root) is True
+
+    missing_root = tmp_path / "missing"
+    missing_root.mkdir()
+    (missing_root / "run_agent.py").write_text("_run_codex_stream\n", encoding="utf-8")
+    assert mod.check_source_timeout_fix(missing_root) is False

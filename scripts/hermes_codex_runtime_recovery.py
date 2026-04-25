@@ -218,7 +218,19 @@ def check_source_timeout_fix(source_root: Optional[Path]) -> Optional[bool]:
     if not run_agent.exists():
         return None
     text = run_agent.read_text(encoding="utf-8")
-    return "_codex_stream_timeout" in text
+    # Older local fix used a dedicated _codex_stream_timeout helper.  Hermes
+    # v0.11+ moved timeout handling into the general provider/model
+    # request_timeout_seconds path and rebuilt request clients, so accept either
+    # marker as evidence that the Responses/Codex path is no longer relying only
+    # on opaque SDK defaults.
+    legacy_marker = "_codex_stream_timeout" in text
+    current_marker = (
+        "request_timeout_seconds" in text
+        and "get_provider_request_timeout" in text
+        and "_create_request_openai_client" in text
+        and "_run_codex_stream" in text
+    )
+    return legacy_marker or current_marker
 
 
 def apply_delegation_settings(hermes_bin: str) -> List[str]:
@@ -327,10 +339,10 @@ def build_checks(args: argparse.Namespace) -> Dict[str, object]:
         checks.append(CheckResult("live_import", "warn", "could not inspect live hermes_cli import path"))
 
     if timeout_fix is True:
-        checks.append(CheckResult("codex_timeout_fix", "ok", "source repo contains _codex_stream_timeout"))
+        checks.append(CheckResult("codex_timeout_fix", "ok", "source repo contains Codex/Responses timeout handling"))
     elif timeout_fix is False:
-        checks.append(CheckResult("codex_timeout_fix", "warn", "source repo does not contain _codex_stream_timeout"))
-        warnings.append("source repo appears to be missing the Codex timeout fix")
+        checks.append(CheckResult("codex_timeout_fix", "warn", "source repo does not contain recognized Codex/Responses timeout handling"))
+        warnings.append("source repo appears to be missing recognized Codex/Responses timeout handling")
     else:
         checks.append(CheckResult("codex_timeout_fix", "warn", "no Hermes source root detected"))
 
