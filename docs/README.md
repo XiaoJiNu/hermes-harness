@@ -26,8 +26,9 @@
 ### 规格、计划、审计与决策
 - `docs/specs/repo-charter.md`
 - `docs/plans/active/2026-04-14-repo-bootstrap.md`
-- `docs/plans/active/2026-04-24-hermes-codex-runtime-recovery.md`
-- `docs/plans/active/2026-04-25-hermes-harness-method-sync.md`
+- `docs/plans/completed/2026-04-24-hermes-codex-runtime-recovery.md`
+- `docs/plans/completed/2026-04-25-hermes-harness-method-sync.md`
+- `docs/plans/completed/2026-04-25-agent-skills-method-intake.md`
 - `docs/audits/2026-04-14-initial-state.md`
 - `docs/audits/2026-04-15-hermes-codex-tun-instability.md`
 - `docs/decisions/0001-hermes-default-runtime-not-exclusive.md`

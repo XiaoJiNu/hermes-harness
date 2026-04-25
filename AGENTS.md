@@ -23,6 +23,7 @@
 - `docs/runbooks/agent-skills-method-intake.md`：如何 intake agent-skills 这类外部方法来源
 - `docs/references/agent-skills-crosswalk.md`：外部 skill 方法到本仓库 surface 的映射
 - `docs/plans/active/`：当前正在推进的计划
+- `docs/plans/completed/`：已经完成并归档的计划 / 完成记录
 
 ## 核心规则
 

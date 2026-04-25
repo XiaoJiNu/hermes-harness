@@ -84,6 +84,11 @@ python3 scripts/check_method_update_sources.py \
 如果任务会改多个 surface，应先更新：
 - `docs/plans/active/`
 
+完成后应把状态为 `done` / `completed` 的一次性计划移动到：
+- `docs/plans/completed/`
+
+仍承担持续维护职责的计划可以留在 `docs/plans/active/`，但必须在文件头说明原因。
+
 ### 第 4 步：执行一个边界清晰的批次
 
 例如：
