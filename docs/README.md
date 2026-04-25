@@ -26,12 +26,20 @@
 ### 规格、计划、审计与决策
 - `docs/specs/repo-charter.md`
 - `docs/plans/active/2026-04-14-repo-bootstrap.md`
+- `docs/plans/active/2026-04-24-hermes-codex-runtime-recovery.md`
+- `docs/plans/active/2026-04-25-hermes-harness-method-sync.md`
 - `docs/audits/2026-04-14-initial-state.md`
+- `docs/audits/2026-04-15-hermes-codex-tun-instability.md`
 - `docs/decisions/0001-hermes-default-runtime-not-exclusive.md`
 
 ### 运行手册与模板
 - `docs/runbooks/add-project-type-playbook.md`
 - `docs/runbooks/maintenance-review.md`
+- `docs/runbooks/hermes-codex-runtime-recovery.md`：Hermes + Codex 统一恢复入口
+- `docs/runbooks/hermes-codex-proxy-setup.md`：Hermes + Codex system proxy 配置与重启后失效修复
+- `scripts/hermes_codex_runtime_recovery.py`：Hermes + Codex 诊断 / apply 脚本
+- `docs/runbooks/hermes-method-update-sync.md`：Hermes / harness 方法更新同步流程
+- `scripts/check_method_update_sources.py`：Hermes / harness 更新源只读检查脚本
 - `docs/templates/project-type-playbook-template.md`
 
 ### 健康度

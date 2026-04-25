@@ -19,6 +19,8 @@ REQUIRED_PATHS = [
     'docs/templates/project-type-playbook-template.md',
     'docs/runbooks/add-project-type-playbook.md',
     'docs/runbooks/maintenance-review.md',
+    'docs/runbooks/hermes-codex-runtime-recovery.md',
+    'docs/runbooks/hermes-method-update-sync.md',
     'docs/decisions/0001-hermes-default-runtime-not-exclusive.md',
     'docs/audits/2026-04-14-initial-state.md',
     'docs/tech-debt-tracker.md',
@@ -28,6 +30,8 @@ REQUIRED_PATHS = [
     'docs/playbooks/benchmark-eval-repo.md',
     'docs/playbooks/deployment-platform.md',
     'docs/playbooks/multi-agent-product-ops.md',
+    'scripts/hermes_codex_runtime_recovery.py',
+    'scripts/check_method_update_sources.py',
     '.github/workflows/ci.yml',
 ]
 
@@ -43,6 +47,10 @@ REQUIRED_DOC_INDEX_REFS = [
     'docs/playbooks/multi-agent-product-ops.md',
     'docs/runbooks/add-project-type-playbook.md',
     'docs/runbooks/maintenance-review.md',
+    'docs/runbooks/hermes-codex-runtime-recovery.md',
+    'docs/runbooks/hermes-method-update-sync.md',
+    'scripts/hermes_codex_runtime_recovery.py',
+    'scripts/check_method_update_sources.py',
 ]
 
 FORBIDDEN_OPERATING_MODEL_TERMS = [

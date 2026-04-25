@@ -39,6 +39,17 @@ harness 决定：
 4. 先做最小 batch，再扩大范围
 5. 每个 batch 结束都做验证与文档同步
 
+## Runtime 能力预检
+
+在真正执行大任务前，Hermes 应把 runtime 能力映射成 harness 决策，而不是反过来让工具能力主导项目：
+
+- 如果要并发：先定义子任务边界、toolsets、验证命令和 handoff artifact
+- 如果任务很长：先写 active plan，再使用 background / watch_patterns / focused compression
+- 如果依赖 provider 稳定性：记录模型、fallback、timeout、代理和成本约束
+- 如果要定时执行：cron prompt 必须自足，并只启用必要 toolsets
+- 如果要固化自动化：优先从 runbook + script + test 开始，再考虑 plugin / shell hook
+- 如果用户问“有没有更新”：先按 `docs/runbooks/hermes-method-update-sync.md` 检查，不要凭记忆回答
+
 ## 所有新项目都建议具备的最小骨架
 
 - `README.md`

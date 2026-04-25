@@ -12,6 +12,7 @@
 - `docs/playbooks/benchmark-eval-repo.md`
 - `docs/playbooks/deployment-platform.md`
 - `docs/playbooks/multi-agent-product-ops.md`
+- `docs/runbooks/hermes-method-update-sync.md`：检查 Hermes / harness 方法更新并同步有价值增量
 
 使用原则：
 - 先按项目类型选择方法

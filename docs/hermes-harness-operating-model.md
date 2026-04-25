@@ -43,6 +43,21 @@
 - 补充新的项目类型方法
 - 更新已有方法
 - 增强机械化约束
+- 同步 Hermes / harness 方法更新
+
+如果用户明确要求“看看 Hermes 或 harness 有没有更新”，先执行：
+
+```bash
+python3 scripts/check_method_update_sources.py --json
+```
+
+需要最新远端状态时再执行：
+
+```bash
+python3 scripts/check_method_update_sources.py --fetch --json
+```
+
+然后按 `docs/runbooks/hermes-method-update-sync.md` 过滤“有方法价值”的更新。
 
 ### 第 2 步：重建仓库上下文
 
@@ -105,6 +120,18 @@
 - 还缺什么控制面
 - 运行了哪些验证
 - 哪些缺口已记录为 debt
+
+## Hermes runtime 能力采用规则
+
+Hermes 的新功能只有在能稳定提升 harness 方法时才进入本仓库。
+
+当前默认采用的规则：
+- subagent：先定义角色、输入、输出、验证命令，再并发；必要时限制 toolsets、并发数、spawn depth 和成本
+- `/steer` 或其他 mid-run nudge：只能作为过程纠偏；如果改变需求，必须回写 spec / plan / runbook
+- context / compression：先把关键状态写入仓库工件，再做 focused compression；不要把 source of truth 放在压缩摘要里
+- provider / model / timeout：属于 runtime 决策，不写死到方法层；但项目可记录推荐档位、fallback、timeout 和成本约束
+- cron / webhook / background：长期任务 prompt 必须自足，默认最小 toolsets，background 任务优先设置 watch_patterns
+- plugin / shell hook：只有稳定、重复、可验证的规则才固化；必须有 runbook、回滚说明和测试
 
 坏的结果包括：
 - 只给泛泛建议，不落到具体文档

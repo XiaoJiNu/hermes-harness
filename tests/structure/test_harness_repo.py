@@ -20,6 +20,8 @@ def test_required_control_plane_files_exist():
         "docs/templates/project-type-playbook-template.md",
         "docs/runbooks/add-project-type-playbook.md",
         "docs/runbooks/maintenance-review.md",
+        "docs/runbooks/hermes-codex-runtime-recovery.md",
+        "docs/runbooks/hermes-method-update-sync.md",
         "docs/decisions/0001-hermes-default-runtime-not-exclusive.md",
         "docs/audits/2026-04-14-initial-state.md",
         "docs/tech-debt-tracker.md",
@@ -30,6 +32,8 @@ def test_required_control_plane_files_exist():
         "docs/playbooks/deployment-platform.md",
         "docs/playbooks/multi-agent-product-ops.md",
         "scripts/check_control_plane.py",
+        "scripts/hermes_codex_runtime_recovery.py",
+        "scripts/check_method_update_sources.py",
         ".github/workflows/ci.yml",
     ]
 
@@ -51,6 +55,10 @@ def test_docs_index_links_to_key_playbooks_and_runbooks():
         "docs/playbooks/multi-agent-product-ops.md",
         "docs/runbooks/add-project-type-playbook.md",
         "docs/runbooks/maintenance-review.md",
+        "docs/runbooks/hermes-codex-runtime-recovery.md",
+        "docs/runbooks/hermes-method-update-sync.md",
+        "scripts/hermes_codex_runtime_recovery.py",
+        "scripts/check_method_update_sources.py",
     ]
 
     missing_refs = [ref for ref in required_refs if ref not in docs_index]

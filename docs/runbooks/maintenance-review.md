@@ -27,6 +27,9 @@
    - 用户本地参考资料
    - 已归档的 harness 相关文章与 notes
    - 最近值得采纳的 agent / harness 实践
+   - 最新或热门的外部 SOTA 方法来源；方法论升级批次必须先整理候选更新并让用户审核
+   - Hermes runtime / source repo 更新状态：`python3 scripts/check_method_update_sources.py --json`
+   - 需要最新远端状态时按 `docs/runbooks/hermes-method-update-sync.md` 执行 `--fetch`
 
 3. 识别变化
    - 有没有新的项目类型需要覆盖

@@ -57,6 +57,10 @@
 - `docs/playbooks/benchmark-eval-repo.md`：benchmark / eval / leaderboard 项目方法
 - `docs/playbooks/deployment-platform.md`：部署 / 平台 / 推理服务项目方法
 - `docs/playbooks/multi-agent-product-ops.md`：多 agent 协作与产品运营项目方法
+- `docs/runbooks/hermes-codex-runtime-recovery.md`：Hermes + Codex 故障恢复入口
+- `scripts/hermes_codex_runtime_recovery.py`：Hermes + Codex 诊断 / apply 脚本
+- `docs/runbooks/hermes-method-update-sync.md`：Hermes / harness 方法更新同步流程
+- `scripts/check_method_update_sources.py`：Hermes / harness 更新源只读检查脚本
 - `docs/runbooks/add-project-type-playbook.md`：新增项目类型方法的标准流程
 - `docs/runbooks/maintenance-review.md`：持续维护与更新流程
 
