@@ -45,6 +45,7 @@
 - 增强机械化约束
 - 同步 Hermes / harness 方法更新
 - intake agent-skills 或其他外部 workflow pack
+- 为论文复现项目选择 `docs/playbooks/ai-paper-reproduction.md`，复制 `docs/templates/ai-paper-reproduction-project-template.md`，并建立 claim matrix / source survey / gap log
 
 如果用户明确要求“看看 Hermes 或 harness 有没有更新”，先执行：
 

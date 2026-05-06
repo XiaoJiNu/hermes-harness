@@ -13,10 +13,12 @@ REQUIRED_PATHS = [
     'docs/hermes-harness-operating-model.md',
     'docs/hermes-harness-general-playbook.md',
     'docs/hermes-harness-algorithm-engineer-playbook.md',
+    'docs/playbooks/ai-paper-reproduction.md',
     'docs/hermes使用harness.md',
     'docs/specs/repo-charter.md',
     'docs/catalog/project-types.md',
     'docs/templates/project-type-playbook-template.md',
+    'docs/templates/ai-paper-reproduction-project-template.md',
     'docs/runbooks/add-project-type-playbook.md',
     'docs/runbooks/maintenance-review.md',
     'docs/runbooks/hermes-codex-runtime-recovery.md',
@@ -25,6 +27,7 @@ REQUIRED_PATHS = [
     'docs/decisions/0001-hermes-default-runtime-not-exclusive.md',
     'docs/decisions/0002-agent-skills-external-method-source.md',
     'docs/references/agent-skills-crosswalk.md',
+    'docs/references/ai-paper-reproduction-sources.md',
     'docs/plans/completed/2026-04-24-hermes-codex-runtime-recovery.md',
     'docs/plans/completed/2026-04-25-hermes-harness-method-sync.md',
     'docs/plans/completed/2026-04-25-agent-skills-method-intake.md',
@@ -45,6 +48,7 @@ REQUIRED_DOC_INDEX_REFS = [
     'docs/hermes-harness-operating-model.md',
     'docs/hermes-harness-general-playbook.md',
     'docs/hermes-harness-algorithm-engineer-playbook.md',
+    'docs/playbooks/ai-paper-reproduction.md',
     'docs/catalog/project-types.md',
     'docs/playbooks/software-product.md',
     'docs/playbooks/data-pipeline.md',
@@ -58,6 +62,8 @@ REQUIRED_DOC_INDEX_REFS = [
     'docs/runbooks/agent-skills-method-intake.md',
     'docs/decisions/0002-agent-skills-external-method-source.md',
     'docs/references/agent-skills-crosswalk.md',
+    'docs/references/ai-paper-reproduction-sources.md',
+    'docs/templates/ai-paper-reproduction-project-template.md',
     'docs/plans/completed/2026-04-24-hermes-codex-runtime-recovery.md',
     'docs/plans/completed/2026-04-25-hermes-harness-method-sync.md',
     'docs/plans/completed/2026-04-25-agent-skills-method-intake.md',
@@ -100,9 +106,25 @@ def main() -> None:
         'docs/playbooks/benchmark-eval-repo.md',
         'docs/playbooks/deployment-platform.md',
         'docs/playbooks/multi-agent-product-ops.md',
+        'docs/playbooks/ai-paper-reproduction.md',
     ]:
         if required_ref not in project_types:
             fail(f'docs/catalog/project-types.md missing project type reference: {required_ref}')
+
+    paper_playbook = (ROOT / 'docs/playbooks/ai-paper-reproduction.md').read_text(encoding='utf-8')
+    for required_phrase in ['复现等级', 'paper-claim-matrix.md', 'source-survey.md', 'gap log', 'R4', 'docs/templates/ai-paper-reproduction-project-template.md']:
+        if required_phrase not in paper_playbook:
+            fail(f'ai paper reproduction playbook is missing phrase: {required_phrase}')
+
+    paper_template = (ROOT / 'docs/templates/ai-paper-reproduction-project-template.md').read_text(encoding='utf-8')
+    for required_phrase in ['Reproduction Spec', 'Source Survey', 'Paper Claim Matrix', 'Paper-vs-Code Audit', 'Smoke Gates', 'Run Registry', 'Gap Log', 'Reproduction Report']:
+        if required_phrase not in paper_template:
+            fail(f'ai paper reproduction template is missing phrase: {required_phrase}')
+
+    paper_sources = (ROOT / 'docs/references/ai-paper-reproduction-sources.md').read_text(encoding='utf-8')
+    for required_source in ['paperswithcode/paperswithcode-data', 'labmlai/annotated_deep_learning_paper_implementations', 'huggingface/transformers', 'open-mmlab/mmdetection', 'the-turing-way/the-turing-way']:
+        if required_source not in paper_sources:
+            fail(f'ai paper reproduction sources missing source: {required_source}')
 
     entry_doc = (ROOT / 'docs/hermes使用harness.md').read_text(encoding='utf-8')
     for required_ref in [

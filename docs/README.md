@@ -14,9 +14,12 @@
 - `docs/hermes-harness-operating-model.md`：本仓库的正式操作模型
 - `docs/hermes-harness-general-playbook.md`：通用新项目启动方法
 - `docs/hermes-harness-algorithm-engineer-playbook.md`：算法工程 / 模型训练方法
+- `docs/playbooks/ai-paper-reproduction.md`：AI 论文系统复现方法
+- `docs/templates/ai-paper-reproduction-project-template.md`：AI 论文复现项目控制面模板
 
 ### 项目类型目录与特定方法
 - `docs/catalog/project-types.md`：选择哪个 harness 方法
+- `docs/playbooks/ai-paper-reproduction.md`：AI 论文系统复现项目
 - `docs/playbooks/software-product.md`：软件产品项目
 - `docs/playbooks/data-pipeline.md`：数据管道 / ETL / 数据平台项目
 - `docs/playbooks/benchmark-eval-repo.md`：benchmark / eval / leaderboard 项目
@@ -29,11 +32,14 @@
 - `docs/plans/completed/2026-04-24-hermes-codex-runtime-recovery.md`
 - `docs/plans/completed/2026-04-25-hermes-harness-method-sync.md`
 - `docs/plans/completed/2026-04-25-agent-skills-method-intake.md`
+- `docs/plans/completed/2026-04-29-ai-paper-reproduction-method.md`
 - `docs/audits/2026-04-14-initial-state.md`
 - `docs/audits/2026-04-15-hermes-codex-tun-instability.md`
 - `docs/decisions/0001-hermes-default-runtime-not-exclusive.md`
 - `docs/decisions/0002-agent-skills-external-method-source.md`
 - `docs/references/agent-skills-crosswalk.md`
+- `docs/references/ai-paper-reproduction-sources.md`
+- `docs/templates/ai-paper-reproduction-project-template.md`
 
 ### 运行手册与模板
 - `docs/runbooks/add-project-type-playbook.md`
@@ -45,6 +51,7 @@
 - `docs/runbooks/agent-skills-method-intake.md`：agent-skills 外部方法来源 intake 流程
 - `scripts/check_method_update_sources.py`：Hermes / harness / agent-skills 更新源只读检查脚本
 - `docs/templates/project-type-playbook-template.md`
+- `docs/templates/ai-paper-reproduction-project-template.md`
 
 ### 健康度
 - `docs/tech-debt-tracker.md`

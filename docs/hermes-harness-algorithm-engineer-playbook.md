@@ -33,6 +33,11 @@
 6. 自有数据 adaptation
 7. baseline comparison 与 checkpoint
 
+如果任务的核心是“无官方代码或弱开源条件下系统复现 AI paper”，不要只使用本通用 playbook；应叠加：
+- `docs/playbooks/ai-paper-reproduction.md`
+- `docs/references/ai-paper-reproduction-sources.md`
+- `docs/templates/ai-paper-reproduction-project-template.md`
+
 ## 最小控制面
 
 - spec

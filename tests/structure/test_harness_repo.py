@@ -14,10 +14,12 @@ def test_required_control_plane_files_exist():
         "docs/hermes-harness-operating-model.md",
         "docs/hermes-harness-general-playbook.md",
         "docs/hermes-harness-algorithm-engineer-playbook.md",
+        "docs/playbooks/ai-paper-reproduction.md",
         "docs/hermes使用harness.md",
         "docs/specs/repo-charter.md",
         "docs/catalog/project-types.md",
         "docs/templates/project-type-playbook-template.md",
+        "docs/templates/ai-paper-reproduction-project-template.md",
         "docs/runbooks/add-project-type-playbook.md",
         "docs/runbooks/maintenance-review.md",
         "docs/runbooks/hermes-codex-runtime-recovery.md",
@@ -26,6 +28,7 @@ def test_required_control_plane_files_exist():
         "docs/decisions/0001-hermes-default-runtime-not-exclusive.md",
         "docs/decisions/0002-agent-skills-external-method-source.md",
         "docs/references/agent-skills-crosswalk.md",
+        "docs/references/ai-paper-reproduction-sources.md",
         "docs/plans/completed/2026-04-24-hermes-codex-runtime-recovery.md",
         "docs/plans/completed/2026-04-25-hermes-harness-method-sync.md",
         "docs/plans/completed/2026-04-25-agent-skills-method-intake.md",
@@ -53,6 +56,7 @@ def test_docs_index_links_to_key_playbooks_and_runbooks():
         "docs/hermes-harness-operating-model.md",
         "docs/hermes-harness-general-playbook.md",
         "docs/hermes-harness-algorithm-engineer-playbook.md",
+        "docs/playbooks/ai-paper-reproduction.md",
         "docs/catalog/project-types.md",
         "docs/playbooks/software-product.md",
         "docs/playbooks/data-pipeline.md",
@@ -66,6 +70,8 @@ def test_docs_index_links_to_key_playbooks_and_runbooks():
         "docs/runbooks/agent-skills-method-intake.md",
         "docs/decisions/0002-agent-skills-external-method-source.md",
         "docs/references/agent-skills-crosswalk.md",
+        "docs/references/ai-paper-reproduction-sources.md",
+        "docs/templates/ai-paper-reproduction-project-template.md",
         "docs/plans/completed/2026-04-24-hermes-codex-runtime-recovery.md",
         "docs/plans/completed/2026-04-25-hermes-harness-method-sync.md",
         "docs/plans/completed/2026-04-25-agent-skills-method-intake.md",
@@ -92,6 +98,7 @@ def test_project_type_catalog_has_extension_rule():
         "docs/playbooks/benchmark-eval-repo.md",
         "docs/playbooks/deployment-platform.md",
         "docs/playbooks/multi-agent-product-ops.md",
+        "docs/playbooks/ai-paper-reproduction.md",
     ]:
         assert required_ref in project_types, f"Project type catalog missing reference: {required_ref}"
 
@@ -102,10 +109,36 @@ def test_entry_doc_points_to_canonical_docs():
         "docs/hermes-harness-operating-model.md",
         "docs/hermes-harness-general-playbook.md",
         "docs/hermes-harness-algorithm-engineer-playbook.md",
+        "docs/playbooks/ai-paper-reproduction.md",
         "docs/catalog/project-types.md",
     ]
     missing_refs = [ref for ref in required_refs if ref not in entry_doc]
     assert not missing_refs, f"Entry doc is missing canonical references: {missing_refs}"
+
+
+def test_ai_paper_reproduction_method_is_actionable():
+    playbook = (ROOT / "docs/playbooks/ai-paper-reproduction.md").read_text(encoding="utf-8")
+    sources = (ROOT / "docs/references/ai-paper-reproduction-sources.md").read_text(encoding="utf-8")
+    template = (ROOT / "docs/templates/ai-paper-reproduction-project-template.md").read_text(encoding="utf-8")
+    catalog = (ROOT / "docs/catalog/project-types.md").read_text(encoding="utf-8")
+
+    for phrase in ["复现等级", "paper-claim-matrix.md", "source-survey.md", "paper-vs-code-audit.md", "gap log", "R4", "docs/templates/ai-paper-reproduction-project-template.md"]:
+        assert phrase in playbook
+
+    for phrase in ["Reproduction Spec", "Source Survey", "Paper Claim Matrix", "Paper-vs-Code Audit", "Smoke Gates", "Run Registry", "Gap Log", "Reproduction Report"]:
+        assert phrase in template
+
+    for source in [
+        "paperswithcode/paperswithcode-data",
+        "labmlai/annotated_deep_learning_paper_implementations",
+        "huggingface/transformers",
+        "open-mmlab/mmdetection",
+        "the-turing-way/the-turing-way",
+    ]:
+        assert source in sources
+
+    assert "无官方代码" in catalog
+    assert "docs/playbooks/ai-paper-reproduction.md" in catalog
 
 
 def test_agent_skills_intake_preserves_harness_boundaries():

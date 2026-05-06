@@ -51,6 +51,9 @@
 - `docs/hermes-harness-operating-model.md`：本仓库的正式操作模型
 - `docs/hermes-harness-general-playbook.md`：所有新项目的通用启动方法
 - `docs/hermes-harness-algorithm-engineer-playbook.md`：算法工程 / 训练 / 复现方法
+- `docs/playbooks/ai-paper-reproduction.md`：无官方代码或弱开源条件下的 AI 论文系统复现方法
+- `docs/references/ai-paper-reproduction-sources.md`：论文复现可用的开源仓库、平台和方法来源
+- `docs/templates/ai-paper-reproduction-project-template.md`：具体论文复现项目的控制面模板
 - `docs/catalog/project-types.md`：项目类型选择目录
 - `docs/playbooks/software-product.md`：软件产品项目方法
 - `docs/playbooks/data-pipeline.md`：数据管道 / ETL / 数据平台项目方法

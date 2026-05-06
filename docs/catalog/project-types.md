@@ -17,6 +17,9 @@
 选择：
 - `docs/hermes-harness-algorithm-engineer-playbook.md`
 
+如果重点是“给定 paper 和数据，系统复现论文”，尤其是无官方代码、官方代码不可运行或需要比较多个社区实现，进一步选择：
+- `docs/playbooks/ai-paper-reproduction.md`
+
 ### 4. 如果项目以数据管道、ETL、索引、批处理、数据质量治理为主
 选择：
 - `docs/playbooks/data-pipeline.md`
@@ -44,6 +47,7 @@
 |---|---|---|
 | 软件功能闭环、接口、交互、服务 | `docs/playbooks/software-product.md` | spec, architecture, runbook, tests, CI |
 | 模型训练、复现、评测、比较 | `docs/hermes-harness-algorithm-engineer-playbook.md` | dataset contract, runbook, manifest, registry, comparison |
+| 无官方代码或弱开源条件下复现 AI paper | `docs/playbooks/ai-paper-reproduction.md` | paper claim matrix, source survey, paper-vs-code audit, run registry, gap log, `docs/templates/ai-paper-reproduction-project-template.md` |
 | 数据抓取、清洗、调度、ETL | `docs/playbooks/data-pipeline.md` | input contract, pipeline stages, quality gates, schedule/run registry |
 | benchmark、leaderboard、评测回归 | `docs/playbooks/benchmark-eval-repo.md` | benchmark spec, metric catalog, eval registry, comparison, regression gate |
 | 部署、平台、推理服务、发布治理 | `docs/playbooks/deployment-platform.md` | env contract, deploy/rollback runbooks, SLO, release gate, observability |
