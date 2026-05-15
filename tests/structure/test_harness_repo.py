@@ -116,6 +116,19 @@ def test_entry_doc_points_to_canonical_docs():
     assert not missing_refs, f"Entry doc is missing canonical references: {missing_refs}"
 
 
+def test_codex_runtime_recovery_covers_refresh_token_conflict():
+    runbook = (ROOT / "docs/runbooks/hermes-codex-runtime-recovery.md").read_text(encoding="utf-8")
+    for phrase in [
+        "Codex refresh token was already consumed by another client",
+        "hermes auth add openai-codex --type oauth",
+        "ChatGPT Security Settings",
+        "device-code",
+        "hermes auth status openai-codex",
+        "hermes chat -q",
+    ]:
+        assert phrase in runbook
+
+
 def test_ai_paper_reproduction_method_is_actionable():
     playbook = (ROOT / "docs/playbooks/ai-paper-reproduction.md").read_text(encoding="utf-8")
     sources = (ROOT / "docs/references/ai-paper-reproduction-sources.md").read_text(encoding="utf-8")

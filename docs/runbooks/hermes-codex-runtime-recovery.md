@@ -11,6 +11,7 @@
 - `APIConnectionError`
 - `No response from provider for 300s`
 - `Request timed out.`
+- `Codex refresh token was already consumed by another client`
 - subagent 默认继承 `gpt-5.4 high`，上下文膨胀后变慢或卡死
 - 电脑重启后 Hermes / Codex 再次不可用
 
@@ -112,6 +113,77 @@ python3 scripts/hermes_codex_runtime_recovery.py \
   --smoke-test
 ```
 
+## Codex refresh token 被其他客户端消费
+
+如果 `hermes status --all`、`hermes auth status openai-codex` 或一次 Hermes 调用出现：
+
+```text
+Codex refresh token was already consumed by another client (e.g. Codex CLI or VS Code extension).
+Run `codex` in your terminal to generate fresh tokens, then run `hermes auth` to re-authenticate.
+```
+
+含义：
+- 这是 Codex OAuth refresh token 轮换冲突，不是代理或 timeout 问题。
+- Codex CLI 或 VS Code Codex 扩展先消费了旧 refresh token。
+- Hermes 需要重新建立自己的 `openai-codex` device-code 凭据。
+- 不要把一次性 token 或 device code 写进文档、memory 或 issue。
+
+先确认状态：
+
+```bash
+python3 scripts/hermes_codex_runtime_recovery.py --json
+codex login status
+hermes auth status openai-codex
+hermes auth list openai-codex
+```
+
+如果 Codex CLI 仍显示已登录，可先触发一次最小 Codex 请求，让 Codex CLI 写回它自己的新 token：
+
+```bash
+codex exec --ephemeral -C "$PWD" "Reply exactly: ok"
+```
+
+然后给 Hermes 重新生成独立凭据：
+
+```bash
+hermes auth add openai-codex --type oauth --label device_code_fresh
+```
+
+按命令输出打开：
+
+```text
+https://auth.openai.com/codex/device
+```
+
+输入本次命令打印的一次性 code 并完成授权。
+
+如果浏览器页面提示：
+
+```text
+Enable device code authorization for Codex in ChatGPT Security Settings
+```
+
+先进入 ChatGPT Security Settings 启用 Codex device-code 授权，再重新运行 `hermes auth add openai-codex --type oauth --label device_code_fresh`，使用新的 code 完成授权。
+
+验证：
+
+```bash
+hermes auth status openai-codex
+hermes chat -q "请只回复：ok"
+```
+
+期望：
+- `hermes auth status openai-codex` 输出 `openai-codex: logged in`
+- `hermes chat -q "请只回复：ok"` 返回 `ok`
+
+确认新凭据可用后，如果 `hermes auth list openai-codex` 里仍有旧的 exhausted 凭据，再按索引删除旧项：
+
+```bash
+hermes auth remove openai-codex <stale-index>
+hermes auth status openai-codex
+hermes chat -q "请只回复：ok"
+```
+
 ## 何时回到 proxy runbook
 
 如果问题明确来自：
@@ -141,11 +213,14 @@ recovery runbook 负责指导未来重复执行。
 - “subagent 卡住”
 - “电脑重启后 Hermes 不能用”
 - “No response from provider for 300s”
+- “Codex refresh token was already consumed by another client”
+- “Codex 授权页面要求启用 device code authorization”
 
 默认行为应为：
 1. 先搜索本仓库里的 `hermes codex runtime recovery`
 2. 先运行 `python3 scripts/hermes_codex_runtime_recovery.py --json`
-3. 再根据输出决定是否执行 `--apply` / `--apply-profile` / `--repoint-live-install` / `--smoke-test`
+3. 如果是 refresh-token/device-code 授权问题，按本 runbook 的 `Codex refresh token 被其他客户端消费` 分支处理
+4. 再根据输出决定是否执行 `--apply` / `--apply-profile` / `--repoint-live-install` / `--smoke-test`
 
 不要直接重复从零排查。
 
