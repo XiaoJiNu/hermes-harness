@@ -7,6 +7,7 @@
 > 后续再次排障确认：问题不只来自 `tun mode`。
 > 在 shell 代理变量已经恢复、live install 已指向本地源码的前提下，
 > 仍可复现两类新症状：
+>
 > - `openai-codex` / Responses API 在约 1 分钟量级报 `APITimeoutError`
 > - subagent 默认继承主模型 `gpt-5.4` + `high reasoning`，上下文可膨胀到 `~51k tokens`
 >
@@ -20,12 +21,12 @@
 ## 观察到的症状
 
 1. Codex 会话在 2026-04-15 出现：
+
    - `ReadError`
    - `[SSL: DECRYPTION_FAILED_OR_BAD_RECORD_MAC] decryption failed or bad record mac`
-
 2. 本地 Hermes 日志已出现过：
-   - `Request timed out.`
 
+   - `Request timed out.`
 3. 该问题不是单纯的“完全无法访问 chatgpt.com”。
    同一台机器上，直连 `chatgpt.com:443` 的 TLS 握手可以成功，但对 `https://chatgpt.com` 的 HTTP 请求会落到 Cloudflare challenge。
 
@@ -53,6 +54,7 @@
 - `hermes-agent/run_agent.py` 中 `_run_codex_stream(...)` 明确使用持续流式连接。
 
 这意味着链路质量问题会优先表现为：
+
 - timeout
 - connection reset / closed
 - TLS record 错误
@@ -62,16 +64,17 @@
 
 1. 当前 shell 中没有显式 `HTTP_PROXY` / `HTTPS_PROXY` / `ALL_PROXY` 环境变量。
    这说明当前更可能是系统级 VPN `tun mode` 在接管流量，而不是 Hermes 进程显式走一个本地应用层代理。
-
 2. 直连 TLS 握手可成功：
+
    - `TLSv1.3`
    - 证书 `commonName=chatgpt.com`
-
 3. `curl -I https://chatgpt.com` 返回：
+
    - `HTTP/2 403`
    - `cf-mitigated: challenge`
 
 这说明：
+
 - 基础 DNS / TCP / TLS 并未完全失效
 - 但当前出口路径对 ChatGPT / Cloudflare 的风控与长连接流量较敏感
 
@@ -91,26 +94,28 @@
 但在 2026-04-23 的复盘中，又确认了两个独立放大器：
 
 1. `hermes-agent/run_agent.py` 的 Codex Responses 流式路径没有显式传入 timeout
+
    - 普通 chat completions 流式路径已有 `httpx.Timeout`
    - Codex 的 `responses.stream()` / `responses.create(stream=True)` 当时依赖 SDK 默认 timeout
    - 在不稳定链路下，这会表现为更早的 `APITimeoutError`
-
 2. 本机 `~/.hermes/config.yaml` 的 `delegation.*` 为空
+
    - subagent 默认继承主代理的 `gpt-5.4`、`openai-codex`、`high reasoning`
    - 长任务中更容易把子代理推到高 token、大等待、弱链路的组合
 
 ## 最可能原因
 
 1. `tun mode` 下的 MTU / 分片问题
+
    - 长连接流式响应比短请求更容易暴露分片、重传和 record 边界问题
-
 2. 当前 VPN 节点质量波动
+
    - 丢包、抖动、短时重路由会先打坏 WebSocket / SSE / 长流式连接
-
 3. UDP / QUIC / 中间层优化干扰
-   - 某些 VPN 或代理实现对 ChatGPT / Cloudflare 的实时流量兼容性较差
 
+   - 某些 VPN 或代理实现对 ChatGPT / Cloudflare 的实时流量兼容性较差
 4. Cloudflare 风控对当前出口更敏感
+
    - 即使 TLS 可建立，也可能对后续请求行为施加 challenge 或更严格的连接治理
 
 ## 影响面
@@ -118,6 +123,7 @@
 当前影响的不只是主对话请求。
 
 由于 Hermes 当前主 provider 就是 `openai-codex`，辅助任务也可能跟随主 provider 走同一链路，因此一次链路抖动会放大为：
+
 - 主回复超时
 - 辅助标题生成失败
 - vision / compression 等辅助调用一起变脆
@@ -201,6 +207,7 @@ curl -s https://chatgpt.com -o /dev/null -w "HTTP status: %{http_code}\n"
 完整步骤已沉淀至：`docs/runbooks/hermes-codex-proxy-setup.md`
 
 到 2026-04-24 为止，统一恢复入口已升级为：
+
 - `docs/runbooks/hermes-codex-runtime-recovery.md`
 - `scripts/hermes_codex_runtime_recovery.py`
 

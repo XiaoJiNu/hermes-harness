@@ -35,6 +35,7 @@
 - `docs/plans/completed/2026-04-29-ai-paper-reproduction-method.md`
 - `docs/audits/2026-04-14-initial-state.md`
 - `docs/audits/2026-04-15-hermes-codex-tun-instability.md`
+- `docs/audits/2026-05-20-hermes-runtime-update.md`
 - `docs/decisions/0001-hermes-default-runtime-not-exclusive.md`
 - `docs/decisions/0002-agent-skills-external-method-source.md`
 - `docs/references/agent-skills-crosswalk.md`

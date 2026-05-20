@@ -8,6 +8,7 @@
 ## 背景
 
 用户希望把本仓库作为长期维护的 harness 方法参考库，用于：
+
 - 跟踪最新 harness engineering 方法
 - 面向团队统一软件开发、模型训练、算法工程的工作方式
 - 在开始新项目时，根据需求选择最合适的 harness 方法
@@ -24,20 +25,24 @@
 ## 计划批次
 
 ### Batch 1
+
 - 建立根入口：`README.md`、`AGENTS.md`、`ARCHITECTURE.md`、`CONTRIBUTING.md`
 - 建立 docs 索引与核心控制面文档
 - 重写 `docs/hermes-harness-operating-model.md`
 
 ### Batch 2
+
 - 建立项目类型目录与 playbook 扩展机制
 - 新增缺失的项目类型 playbook
 - 新增模板与 runbook
 
 ### Batch 3
+
 - 建立结构测试、检查脚本、Makefile、CI
 - 运行验证并修复
 
 ### Batch 4
+
 - 建立持续维护规则与自动化维护任务
 - 更新计划状态与仓库总结
 
