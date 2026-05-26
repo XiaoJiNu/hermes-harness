@@ -23,6 +23,7 @@ def test_required_control_plane_files_exist():
         "docs/runbooks/add-project-type-playbook.md",
         "docs/runbooks/maintenance-review.md",
         "docs/runbooks/hermes-codex-runtime-recovery.md",
+        "docs/runbooks/vscode-remote-ssh-ubuntu.md",
         "docs/runbooks/hermes-method-update-sync.md",
         "docs/runbooks/agent-skills-method-intake.md",
         "docs/decisions/0001-hermes-default-runtime-not-exclusive.md",
@@ -66,6 +67,7 @@ def test_docs_index_links_to_key_playbooks_and_runbooks():
         "docs/runbooks/add-project-type-playbook.md",
         "docs/runbooks/maintenance-review.md",
         "docs/runbooks/hermes-codex-runtime-recovery.md",
+        "docs/runbooks/vscode-remote-ssh-ubuntu.md",
         "docs/runbooks/hermes-method-update-sync.md",
         "docs/runbooks/agent-skills-method-intake.md",
         "docs/decisions/0002-agent-skills-external-method-source.md",
@@ -125,6 +127,28 @@ def test_codex_runtime_recovery_covers_refresh_token_conflict():
         "device-code",
         "hermes auth status openai-codex",
         "hermes chat -q",
+    ]:
+        assert phrase in runbook
+
+
+def test_vscode_remote_ssh_ubuntu_runbook_is_actionable():
+    runbook = (ROOT / "docs/runbooks/vscode-remote-ssh-ubuntu.md").read_text(encoding="utf-8")
+    root_readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    docs_index = (ROOT / "docs/README.md").read_text(encoding="utf-8")
+
+    ref = "docs/runbooks/vscode-remote-ssh-ubuntu.md"
+    assert ref in root_readme
+    assert ref in docs_index
+
+    for phrase in [
+        "Remote-SSH",
+        "openssh-server",
+        "ssh-copy-id",
+        "~/.ssh/config",
+        "ubuntu20-dev",
+        "VSCode Server",
+        "PasswordAuthentication no",
+        "Tailscale",
     ]:
         assert phrase in runbook
 

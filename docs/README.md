@@ -33,6 +33,7 @@
 - `docs/plans/completed/2026-04-25-hermes-harness-method-sync.md`
 - `docs/plans/completed/2026-04-25-agent-skills-method-intake.md`
 - `docs/plans/completed/2026-04-29-ai-paper-reproduction-method.md`
+- `docs/plans/completed/2026-05-26-vscode-remote-ssh-ubuntu-runbook.md`
 - `docs/audits/2026-04-14-initial-state.md`
 - `docs/audits/2026-04-15-hermes-codex-tun-instability.md`
 - `docs/audits/2026-05-20-hermes-runtime-update.md`
@@ -47,6 +48,7 @@
 - `docs/runbooks/maintenance-review.md`
 - `docs/runbooks/hermes-codex-runtime-recovery.md`：Hermes + Codex 统一恢复入口
 - `docs/runbooks/hermes-codex-proxy-setup.md`：Hermes + Codex system proxy 配置与重启后失效修复
+- `docs/runbooks/vscode-remote-ssh-ubuntu.md`：Ubuntu 双机 VSCode Remote-SSH 远程开发方案
 - `scripts/hermes_codex_runtime_recovery.py`：Hermes + Codex 诊断 / apply 脚本
 - `docs/runbooks/hermes-method-update-sync.md`：Hermes / harness 方法更新同步流程
 - `docs/runbooks/agent-skills-method-intake.md`：agent-skills 外部方法来源 intake 流程
