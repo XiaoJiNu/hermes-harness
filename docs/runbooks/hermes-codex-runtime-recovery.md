@@ -12,6 +12,7 @@
 - `No response from provider for 300s`
 - `Request timed out.`
 - `Codex refresh token was already consumed by another client`
+- `TypeError: 'NoneType' object is not iterable`
 - subagent 默认继承 `gpt-5.4 high`，上下文膨胀后变慢或卡死
 - 电脑重启后 Hermes / Codex 再次不可用
 
@@ -28,6 +29,7 @@ python3 scripts/hermes_codex_runtime_recovery.py --json
 2. 检查 `~/.hermes/config.yaml` 的 delegation 稳定性设置
 3. 检查 live Hermes import path
 4. 检查 Hermes source repo 是否包含 Codex timeout 修复
+5. 检查 Hermes source repo 是否包含 Codex null-output stream 恢复修复
 
 ## 一键 apply 路径
 
@@ -83,10 +85,73 @@ delegation.max_iterations = 24
 - `hermes` 二进制路径
 - live venv 中 `hermes_cli` / `hermes_constants` 的 import path
 - Hermes source repo 中是否包含 Codex timeout 修复
+- Hermes source repo 中是否包含 Codex null-output stream 恢复修复
 
 ### 4. 在需要时自动写入 profile block
 
 脚本写入的 block 是带 marker 的，后续重复执行会覆盖更新，而不是不断追加重复内容。
+
+## Codex `gpt-5.5` 报 `NoneType` 不可迭代
+
+如果 Hermes 调用 Codex 出现：
+
+```text
+API call failed (attempt 1/3): TypeError
+Provider: openai-codex  Model: gpt-5.5
+Endpoint: https://chatgpt.com/backend-api/codex
+Error: 'NoneType' object is not iterable
+```
+
+优先判断为 Hermes 的 Codex Responses HTTP/SSE 路径没有处理后端返回的 `response.output=None`。
+这和“Codex CLI 能正常使用”不矛盾：Codex CLI 可走 `responses_websocket`，而 Hermes 默认 runtime 走
+`chatgpt.com/backend-api/codex/responses` 加 OpenAI Python SDK 流式解析。
+
+这个分支记录为通用 Hermes runtime 恢复方法，不按 Dell / 拯救者等具体机器拆分。
+不同电脑只需要分别确认本机的 live Hermes source、代理环境变量和 `~/.hermes/config.yaml` 状态。
+
+先确认 live Hermes 是否包含修复：
+
+```bash
+python3 scripts/hermes_codex_runtime_recovery.py \
+  --json \
+  --hermes-agent-root ~/.hermes/hermes-agent
+
+git -C ~/.hermes/hermes-agent log --oneline -n 5
+```
+
+期望诊断里出现：
+
+```text
+codex_null_output_fix: ok
+```
+
+如果缺失，更新 live Hermes：
+
+```bash
+git -C ~/.hermes/hermes-agent merge --ff-only origin/main
+rm ~/.hermes/.update_check
+```
+
+相关修复提交：
+
+```text
+43a3f119f fix(agent): recover Codex streams with null output
+```
+
+更新后验证：
+
+```bash
+hermes --version
+python3 scripts/hermes_codex_runtime_recovery.py \
+  --json \
+  --hermes-agent-root ~/.hermes/hermes-agent
+hermes chat -Q --provider openai-codex -m gpt-5.5 -q '请只回复：ok'
+```
+
+期望：
+- `hermes --version` 显示 `Up to date`
+- `codex_null_output_fix` 为 `ok`
+- 冒烟返回 `ok`
 
 ## 推荐恢复顺序
 
@@ -105,7 +170,7 @@ python3 scripts/hermes_codex_runtime_recovery.py \
   --proxy-port 7897
 ```
 
-3. 如果输出里 `codex_timeout_fix` 或 `live_import` 有问题，再补：
+3. 如果输出里 `codex_timeout_fix`、`codex_null_output_fix` 或 `live_import` 有问题，再补：
 
 ```bash
 python3 scripts/hermes_codex_runtime_recovery.py \

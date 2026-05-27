@@ -40,6 +40,7 @@ PROFILE_BLOCK_START = "# >>> Hermes Codex Recovery >>>"
 PROFILE_BLOCK_END = "# <<< Hermes Codex Recovery <<<"
 
 DEFAULT_SOURCE_ROOT_CANDIDATES = [
+    Path("~/.hermes/hermes-agent").expanduser(),
     Path("~/yr/code/harness-engineering-all/hermes-agent").expanduser(),
     Path("~/code/harness-engineering-all/hermes-agent").expanduser(),
 ]
@@ -233,6 +234,27 @@ def check_source_timeout_fix(source_root: Optional[Path]) -> Optional[bool]:
     return legacy_marker or current_marker
 
 
+def check_source_null_output_fix(source_root: Optional[Path]) -> Optional[bool]:
+    if source_root is None:
+        return None
+    codex_runtime = source_root / "agent" / "codex_runtime.py"
+    auxiliary_client = source_root / "agent" / "auxiliary_client.py"
+    if not codex_runtime.exists():
+        return None
+    runtime_text = codex_runtime.read_text(encoding="utf-8")
+    auxiliary_text = auxiliary_client.read_text(encoding="utf-8") if auxiliary_client.exists() else ""
+    runtime_marker = (
+        "_responses_null_output_iterable_error" in runtime_text
+        and "_codex_backfilled_response" in runtime_text
+        and "response.output=None" in runtime_text
+    )
+    auxiliary_marker = (
+        "_responses_null_output_iterable_error" in auxiliary_text
+        and "_responses_backfilled_response" in auxiliary_text
+    )
+    return runtime_marker and auxiliary_marker
+
+
 def apply_delegation_settings(hermes_bin: str) -> List[str]:
     actions: List[str] = []
     for key, value in RECOMMENDED_DELEGATION.items():
@@ -279,6 +301,7 @@ def build_checks(args: argparse.Namespace) -> Dict[str, object]:
     proxy_values = resolve_proxy_values(args, env)
     live_imports = check_live_install_imports()
     timeout_fix = check_source_timeout_fix(source_root)
+    null_output_fix = check_source_null_output_fix(source_root)
 
     checks: List[CheckResult] = []
     warnings: List[str] = []
@@ -345,6 +368,14 @@ def build_checks(args: argparse.Namespace) -> Dict[str, object]:
         warnings.append("source repo appears to be missing recognized Codex/Responses timeout handling")
     else:
         checks.append(CheckResult("codex_timeout_fix", "warn", "no Hermes source root detected"))
+
+    if null_output_fix is True:
+        checks.append(CheckResult("codex_null_output_fix", "ok", "source repo contains Codex null-output stream recovery"))
+    elif null_output_fix is False:
+        checks.append(CheckResult("codex_null_output_fix", "warn", "source repo does not contain recognized Codex null-output stream recovery"))
+        warnings.append("source repo appears to be missing Codex null-output stream recovery")
+    else:
+        checks.append(CheckResult("codex_null_output_fix", "warn", "no Hermes source root detected"))
 
     if source_root is not None:
         checks.append(CheckResult("hermes_agent_root", "ok", str(source_root)))

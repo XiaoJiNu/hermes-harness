@@ -97,3 +97,32 @@ def test_check_source_timeout_fix_accepts_legacy_and_current_markers(tmp_path):
     missing_root.mkdir()
     (missing_root / "run_agent.py").write_text("_run_codex_stream\n", encoding="utf-8")
     assert mod.check_source_timeout_fix(missing_root) is False
+
+
+def test_check_source_null_output_fix_requires_runtime_and_auxiliary_markers(tmp_path):
+    mod = _load_module()
+
+    fixed_root = tmp_path / "fixed"
+    (fixed_root / "agent").mkdir(parents=True)
+    (fixed_root / "agent" / "codex_runtime.py").write_text(
+        "_responses_null_output_iterable_error\n"
+        "_codex_backfilled_response\n"
+        "response.output=None\n",
+        encoding="utf-8",
+    )
+    (fixed_root / "agent" / "auxiliary_client.py").write_text(
+        "_responses_null_output_iterable_error\n"
+        "_responses_backfilled_response\n",
+        encoding="utf-8",
+    )
+    assert mod.check_source_null_output_fix(fixed_root) is True
+
+    missing_aux_root = tmp_path / "missing_aux"
+    (missing_aux_root / "agent").mkdir(parents=True)
+    (missing_aux_root / "agent" / "codex_runtime.py").write_text(
+        "_responses_null_output_iterable_error\n"
+        "_codex_backfilled_response\n"
+        "response.output=None\n",
+        encoding="utf-8",
+    )
+    assert mod.check_source_null_output_fix(missing_aux_root) is False
