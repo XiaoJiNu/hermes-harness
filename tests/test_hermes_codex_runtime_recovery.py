@@ -65,13 +65,14 @@ def test_resolve_proxy_values_uses_proxy_port_when_env_missing():
         https_proxy = ""
         all_proxy = ""
         proxy_port = 7897
-        no_proxy = "localhost,127.0.0.1,::1"
+        no_proxy = mod.DEFAULT_NO_PROXY
 
     resolved = mod.resolve_proxy_values(Args(), {})
     assert resolved["HTTP_PROXY"] == "http://127.0.0.1:7897"
     assert resolved["HTTPS_PROXY"] == "http://127.0.0.1:7897"
     assert resolved["ALL_PROXY"] == "socks5://127.0.0.1:7897"
-    assert resolved["NO_PROXY"] == "localhost,127.0.0.1,::1"
+    assert resolved["NO_PROXY"] == mod.DEFAULT_NO_PROXY
+    assert "192.168.15.143" in resolved["NO_PROXY"]
 
 
 def test_check_source_timeout_fix_accepts_legacy_and_current_markers(tmp_path):

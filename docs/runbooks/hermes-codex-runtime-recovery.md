@@ -51,7 +51,9 @@ python3 scripts/hermes_codex_runtime_recovery.py \
 - `--repoint-live-install`：把 live Hermes 对齐到目标 source repo
 - `--smoke-test`：执行最小 `hermes chat` 冒烟
 
-如果你本机不是 `7897`，把它替换成真实系统代理端口。
+如果你本机不是 `7897`，把它替换成真实系统代理端口。脚本默认写入的 `NO_PROXY`
+包含 `192.168.15.143` 和常见 RFC1918 内网段，避免公司内网 GitLab 被本地代理接管；
+这不会影响 Hermes / Codex 访问外网继续走 `HTTP_PROXY` / `HTTPS_PROXY`。
 
 ## 脚本会做什么
 

@@ -34,6 +34,7 @@
 - `docs/plans/completed/2026-04-25-agent-skills-method-intake.md`
 - `docs/plans/completed/2026-04-29-ai-paper-reproduction-method.md`
 - `docs/plans/completed/2026-05-26-vscode-remote-ssh-ubuntu-runbook.md`
+- `docs/plans/completed/2026-05-28-company-gitlab-proxy-bypass.md`
 - `docs/audits/2026-04-14-initial-state.md`
 - `docs/audits/2026-04-15-hermes-codex-tun-instability.md`
 - `docs/audits/2026-05-20-hermes-runtime-update.md`

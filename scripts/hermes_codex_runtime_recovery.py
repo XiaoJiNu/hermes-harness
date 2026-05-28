@@ -36,6 +36,11 @@ PROXY_KEYS = (
     "NO_PROXY",
 )
 
+DEFAULT_NO_PROXY = (
+    "localhost,127.0.0.1,::1,"
+    "192.168.15.143,192.168.15.0/24,192.168.0.0/16,10.0.0.0/8,172.16.0.0/12"
+)
+
 PROFILE_BLOCK_START = "# >>> Hermes Codex Recovery >>>"
 PROFILE_BLOCK_END = "# <<< Hermes Codex Recovery <<<"
 
@@ -414,7 +419,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--http-proxy", default="", help="Explicit HTTP_PROXY value for profile writes.")
     parser.add_argument("--https-proxy", default="", help="Explicit HTTPS_PROXY value for profile writes.")
     parser.add_argument("--all-proxy", default="", help="Explicit ALL_PROXY value for profile writes.")
-    parser.add_argument("--no-proxy", default="localhost,127.0.0.1,::1", help="NO_PROXY value for profile writes.")
+    parser.add_argument("--no-proxy", default=DEFAULT_NO_PROXY, help="NO_PROXY value for profile writes.")
     parser.add_argument("--hermes-agent-root", default="", help="Path to the Hermes source repo for repoint checks.")
     return parser.parse_args()
 

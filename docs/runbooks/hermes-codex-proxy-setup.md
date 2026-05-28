@@ -42,7 +42,7 @@ Hermes / Codex 等命令行进程依赖环境变量感知代理，重启后变�
 export HTTP_PROXY="http://127.0.0.1:PORT"
 export HTTPS_PROXY="http://127.0.0.1:PORT"
 export ALL_PROXY="socks5://127.0.0.1:PORT"
-export NO_PROXY="localhost,127.0.0.1,::1"
+export NO_PROXY="localhost,127.0.0.1,::1,192.168.15.143,192.168.15.0/24,192.168.0.0/16,10.0.0.0/8,172.16.0.0/12"
 ```
 
 示例（本机实际配置，端口 7897）：
@@ -52,8 +52,13 @@ export NO_PROXY="localhost,127.0.0.1,::1"
 export http_proxy="http://127.0.0.1:7897"
 export https_proxy="http://127.0.0.1:7897"
 export all_proxy="socks5://127.0.0.1:7897"
-export NO_PROXY="localhost,127.0.0.1,::1"
+export NO_PROXY="localhost,127.0.0.1,::1,192.168.15.143,192.168.15.0/24,192.168.0.0/16,10.0.0.0/8,172.16.0.0/12"
 ```
+
+`NO_PROXY` 必须包含公司内网 GitLab / HTTP 服务地址。否则 `git clone http://192.168.15.143/...`
+会被 `HTTP_PROXY=http://127.0.0.1:PORT` 接管，代理未启动或无法访问内网时会报
+`Failed to connect to 127.0.0.1 port PORT`。把内网地址加入 `NO_PROXY` 只会让内网直连，
+不会影响 Hermes / Codex 访问 `chatgpt.com` 等外网地址继续走代理。
 
 ### 第三步：当前 session 立即生效
 
