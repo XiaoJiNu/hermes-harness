@@ -248,16 +248,39 @@ def check_source_null_output_fix(source_root: Optional[Path]) -> Optional[bool]:
         return None
     runtime_text = codex_runtime.read_text(encoding="utf-8")
     auxiliary_text = auxiliary_client.read_text(encoding="utf-8") if auxiliary_client.exists() else ""
-    runtime_marker = (
+    # Older fix shape: detect and backfill the SDK helper's typed response
+    # reconstruction when ``response.output=None`` crashes iteration.
+    legacy_runtime_marker = (
         "_responses_null_output_iterable_error" in runtime_text
         and "_codex_backfilled_response" in runtime_text
         and "response.output=None" in runtime_text
     )
-    auxiliary_marker = (
+    legacy_auxiliary_marker = (
         "_responses_null_output_iterable_error" in auxiliary_text
         and "_responses_backfilled_response" in auxiliary_text
     )
-    return runtime_marker and auxiliary_marker
+
+    # Hermes v0.15.1+ fix shape: avoid the SDK helper entirely.  The runtime
+    # consumes raw ``responses.create(stream=True)`` events and reconstructs
+    # content from ``response.output_item.done``, so it never depends on the
+    # terminal ``response.completed.response.output`` field that can be null.
+    raw_event_runtime_marker = (
+        "_consume_codex_event_stream" in runtime_text
+        and "responses.create" in runtime_text
+        and "response.output_item.done" in runtime_text
+        and "response.completed.response.output" in runtime_text
+        and "TypeError: 'NoneType' object is not iterable" in runtime_text
+    )
+    raw_event_auxiliary_marker = (
+        "_consume_codex_event_stream" in auxiliary_text
+        and "responses.create" in auxiliary_text
+        and "response.output_item.done" in auxiliary_text
+        and "TypeError: 'NoneType' object is not iterable" in auxiliary_text
+    )
+
+    return (legacy_runtime_marker and legacy_auxiliary_marker) or (
+        raw_event_runtime_marker and raw_event_auxiliary_marker
+    )
 
 
 def apply_delegation_settings(hermes_bin: str) -> List[str]:

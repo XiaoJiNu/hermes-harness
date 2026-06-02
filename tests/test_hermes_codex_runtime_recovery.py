@@ -100,7 +100,7 @@ def test_check_source_timeout_fix_accepts_legacy_and_current_markers(tmp_path):
     assert mod.check_source_timeout_fix(missing_root) is False
 
 
-def test_check_source_null_output_fix_requires_runtime_and_auxiliary_markers(tmp_path):
+def test_check_source_null_output_fix_accepts_legacy_backfill_markers(tmp_path):
     mod = _load_module()
 
     fixed_root = tmp_path / "fixed"
@@ -117,6 +117,33 @@ def test_check_source_null_output_fix_requires_runtime_and_auxiliary_markers(tmp
         encoding="utf-8",
     )
     assert mod.check_source_null_output_fix(fixed_root) is True
+
+
+def test_check_source_null_output_fix_accepts_raw_event_stream_markers(tmp_path):
+    mod = _load_module()
+
+    fixed_root = tmp_path / "fixed"
+    (fixed_root / "agent").mkdir(parents=True)
+    (fixed_root / "agent" / "codex_runtime.py").write_text(
+        "_consume_codex_event_stream\n"
+        "responses.create\n"
+        "response.output_item.done\n"
+        "response.completed.response.output\n"
+        "TypeError: 'NoneType' object is not iterable\n",
+        encoding="utf-8",
+    )
+    (fixed_root / "agent" / "auxiliary_client.py").write_text(
+        "_consume_codex_event_stream\n"
+        "responses.create\n"
+        "response.output_item.done\n"
+        "TypeError: 'NoneType' object is not iterable\n",
+        encoding="utf-8",
+    )
+    assert mod.check_source_null_output_fix(fixed_root) is True
+
+
+def test_check_source_null_output_fix_requires_runtime_and_auxiliary_markers(tmp_path):
+    mod = _load_module()
 
     missing_aux_root = tmp_path / "missing_aux"
     (missing_aux_root / "agent").mkdir(parents=True)

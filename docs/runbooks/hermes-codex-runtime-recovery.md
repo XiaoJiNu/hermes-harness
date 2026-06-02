@@ -134,11 +134,16 @@ git -C ~/.hermes/hermes-agent merge --ff-only origin/main
 rm ~/.hermes/.update_check
 ```
 
-相关修复提交：
+相关修复路径包括：
 
 ```text
 43a3f119f fix(agent): recover Codex streams with null output
+cb38ce28c refactor(codex): drop SDK responses.stream() helper; consume events directly
 ```
+
+后一种 v0.15.1+ 形态不再依赖 SDK 的 `responses.stream(...)` typed response 重建，而是使用
+`responses.create(stream=True)` 原始事件，并从 `response.output_item.done` 组装最终响应；因此即使
+`response.completed.response.output` 为 `null` 也不触发 `NoneType` 迭代崩溃。
 
 更新后验证：
 
