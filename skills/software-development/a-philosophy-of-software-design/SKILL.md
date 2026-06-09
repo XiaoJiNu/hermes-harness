@@ -11,7 +11,9 @@ metadata:
   source:
     title: A Philosophy of Software Design, 2nd Edition
     author: John Ousterhout
-    local_reference: /home/yr/yr/code/cv/object_detection/3D_OD/MV2DFusion-gly/aposd2e-zh
+    archived_reference: references/aposd2e-zh-archive
+    archived_reference_notice: references/aposd2e-zh-archive/ARCHIVE_NOTICE.md
+    historical_local_reference: /home/yr/yr/code/cv/object_detection/3D_OD/MV2DFusion-gly/aposd2e-zh
     translated_reference: https://github.com/yingang/aposd2e-zh
 ---
 
@@ -370,6 +372,17 @@ Use the a-philosophy-of-software-design skill. Prefer deep modules, information 
 
 8. **Using tests as a substitute for design judgment.** Passing tests do not prove the abstraction is deep or maintainable.
 
+## References
+
+- `references/aposd2e-zh-archive/`: durable archived copy of the Chinese translation repository, including the chapter Markdown files, images, license, and reading entry points.
+- `references/aposd2e-zh-archive/ARCHIVE_NOTICE.md`: provenance, attribution, license boundary, and reading instructions for the archived source material.
+- `references/aposd2e-zh-archive/ARCHIVE_MANIFEST.md`: file list for the archived copy.
+- `references/book-condensation-and-skill-packaging.md`: reusable notes on converting a design book into an operational Hermes skill and packaging both the skill and its source material for cross-machine availability.
+
 ## Source and Attribution
 
-This skill is an applied summary and workflow derived from John Ousterhout's *A Philosophy of Software Design, 2nd Edition* and the local Chinese translation repository at `/home/yr/yr/code/cv/object_detection/3D_OD/MV2DFusion-gly/aposd2e-zh`. The translation repository is CC-BY 4.0; this skill is an original operational condensation for Hermes usage, not a replacement for the book.
+This skill is an applied summary and workflow derived from John Ousterhout's *A Philosophy of Software Design, 2nd Edition* and the Chinese translation repository `aposd2e-zh`.
+
+Use the durable in-skill archive at `references/aposd2e-zh-archive/` as the primary source copy for future Hermes work. The historical local checkout path `/home/yr/yr/code/cv/object_detection/3D_OD/MV2DFusion-gly/aposd2e-zh` may be deleted and should not be treated as durable.
+
+The archived translation repository declares CC-BY 4.0 in its copied `LICENSE` and `README.md`. Keep that attribution with the archive. This Hermes `SKILL.md` remains an original MIT-licensed operational condensation for Hermes usage; the archived book/translation content remains governed by its own declared CC-BY 4.0 license and is not a replacement for the original book.

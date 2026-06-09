@@ -15,4 +15,4 @@ Use `--dry-run` to preview the copy.
 
 ## Included skills
 
-- `software-development/a-philosophy-of-software-design`: software design, API/module design, refactoring, code review, and programming lens derived from John Ousterhout's *A Philosophy of Software Design*.
+- `software-development/a-philosophy-of-software-design`: software design, API/module design, refactoring, code review, and programming lens derived from John Ousterhout's *A Philosophy of Software Design*. This skill also carries a durable archived copy of the `aposd2e-zh` translation under `references/aposd2e-zh-archive/`, so the source material remains available after installing the skill on a new machine.
