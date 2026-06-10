@@ -62,6 +62,8 @@
 - `docs/playbooks/multi-agent-product-ops.md`：多 agent 协作与产品运营项目方法
 - `docs/runbooks/hermes-codex-runtime-recovery.md`：Hermes + Codex 故障恢复入口
 - `docs/runbooks/vscode-remote-ssh-ubuntu.md`：Ubuntu 双机 VSCode Remote-SSH 远程开发方案
+- `docs/runbooks/understand-anything-hermes-bootstrap.md`：在新电脑 / Hermes profile 上可复现安装 Understand-Anything code-reading 方法
+- `scripts/bootstrap_understand_anything.py`：Understand-Anything Hermes skills bootstrap 脚本
 - `scripts/hermes_codex_runtime_recovery.py`：Hermes + Codex 诊断 / apply 脚本
 - `docs/runbooks/hermes-method-update-sync.md`：如何检查并同步 Hermes / harness 方法更新
 - `docs/runbooks/agent-skills-method-intake.md`：如何把 agent-skills 这类外部 workflow pack 转成 harness 方法

@@ -23,6 +23,7 @@ REQUIRED_PATHS = [
     'docs/runbooks/maintenance-review.md',
     'docs/runbooks/hermes-codex-runtime-recovery.md',
     'docs/runbooks/vscode-remote-ssh-ubuntu.md',
+    'docs/runbooks/understand-anything-hermes-bootstrap.md',
     'docs/runbooks/hermes-method-update-sync.md',
     'docs/runbooks/agent-skills-method-intake.md',
     'docs/decisions/0001-hermes-default-runtime-not-exclusive.md',
@@ -41,6 +42,7 @@ REQUIRED_PATHS = [
     'docs/playbooks/deployment-platform.md',
     'docs/playbooks/multi-agent-product-ops.md',
     'scripts/hermes_codex_runtime_recovery.py',
+    'scripts/bootstrap_understand_anything.py',
     'scripts/check_method_update_sources.py',
     '.github/workflows/ci.yml',
 ]
@@ -60,6 +62,7 @@ REQUIRED_DOC_INDEX_REFS = [
     'docs/runbooks/maintenance-review.md',
     'docs/runbooks/hermes-codex-runtime-recovery.md',
     'docs/runbooks/vscode-remote-ssh-ubuntu.md',
+    'docs/runbooks/understand-anything-hermes-bootstrap.md',
     'docs/runbooks/hermes-method-update-sync.md',
     'docs/runbooks/agent-skills-method-intake.md',
     'docs/decisions/0002-agent-skills-external-method-source.md',
@@ -70,6 +73,7 @@ REQUIRED_DOC_INDEX_REFS = [
     'docs/plans/completed/2026-04-25-hermes-harness-method-sync.md',
     'docs/plans/completed/2026-04-25-agent-skills-method-intake.md',
     'scripts/hermes_codex_runtime_recovery.py',
+    'scripts/bootstrap_understand_anything.py',
     'scripts/check_method_update_sources.py',
 ]
 

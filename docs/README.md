@@ -39,6 +39,7 @@
 - `docs/audits/2026-04-15-hermes-codex-tun-instability.md`
 - `docs/audits/2026-05-20-hermes-runtime-update.md`
 - `docs/audits/2026-06-02-hermes-runtime-update.md`
+- `docs/audits/2026-06-10-hermes-runtime-update.md`
 - `docs/decisions/0001-hermes-default-runtime-not-exclusive.md`
 - `docs/decisions/0002-agent-skills-external-method-source.md`
 - `docs/references/agent-skills-crosswalk.md`
@@ -51,7 +52,9 @@
 - `docs/runbooks/hermes-codex-runtime-recovery.md`：Hermes + Codex 统一恢复入口
 - `docs/runbooks/hermes-codex-proxy-setup.md`：Hermes + Codex system proxy 配置与重启后失效修复
 - `docs/runbooks/vscode-remote-ssh-ubuntu.md`：Ubuntu 双机 VSCode Remote-SSH 远程开发方案
+- `docs/runbooks/understand-anything-hermes-bootstrap.md`：Understand-Anything code-reading 方法在 Hermes 上的可复现 bootstrap
 - `scripts/hermes_codex_runtime_recovery.py`：Hermes + Codex 诊断 / apply 脚本
+- `scripts/bootstrap_understand_anything.py`：Understand-Anything Hermes skills bootstrap 脚本
 - `docs/runbooks/hermes-method-update-sync.md`：Hermes / harness 方法更新同步流程
 - `docs/runbooks/agent-skills-method-intake.md`：agent-skills 外部方法来源 intake 流程
 - `scripts/check_method_update_sources.py`：Hermes / harness / agent-skills 更新源只读检查脚本

@@ -24,6 +24,7 @@ def test_required_control_plane_files_exist():
         "docs/runbooks/maintenance-review.md",
         "docs/runbooks/hermes-codex-runtime-recovery.md",
         "docs/runbooks/vscode-remote-ssh-ubuntu.md",
+        "docs/runbooks/understand-anything-hermes-bootstrap.md",
         "docs/runbooks/hermes-method-update-sync.md",
         "docs/runbooks/agent-skills-method-intake.md",
         "docs/decisions/0001-hermes-default-runtime-not-exclusive.md",
@@ -43,6 +44,7 @@ def test_required_control_plane_files_exist():
         "docs/playbooks/multi-agent-product-ops.md",
         "scripts/check_control_plane.py",
         "scripts/hermes_codex_runtime_recovery.py",
+        "scripts/bootstrap_understand_anything.py",
         "scripts/check_method_update_sources.py",
         ".github/workflows/ci.yml",
     ]
@@ -68,6 +70,7 @@ def test_docs_index_links_to_key_playbooks_and_runbooks():
         "docs/runbooks/maintenance-review.md",
         "docs/runbooks/hermes-codex-runtime-recovery.md",
         "docs/runbooks/vscode-remote-ssh-ubuntu.md",
+        "docs/runbooks/understand-anything-hermes-bootstrap.md",
         "docs/runbooks/hermes-method-update-sync.md",
         "docs/runbooks/agent-skills-method-intake.md",
         "docs/decisions/0002-agent-skills-external-method-source.md",
@@ -78,6 +81,7 @@ def test_docs_index_links_to_key_playbooks_and_runbooks():
         "docs/plans/completed/2026-04-25-hermes-harness-method-sync.md",
         "docs/plans/completed/2026-04-25-agent-skills-method-intake.md",
         "scripts/hermes_codex_runtime_recovery.py",
+        "scripts/bootstrap_understand_anything.py",
         "scripts/check_method_update_sources.py",
     ]
 
@@ -151,6 +155,43 @@ def test_vscode_remote_ssh_ubuntu_runbook_is_actionable():
         "Tailscale",
     ]:
         assert phrase in runbook
+
+
+def test_understand_anything_hermes_bootstrap_is_reproducible_without_vendoring():
+    runbook = (ROOT / "docs/runbooks/understand-anything-hermes-bootstrap.md").read_text(encoding="utf-8")
+    script = (ROOT / "scripts/bootstrap_understand_anything.py").read_text(encoding="utf-8")
+    root_readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    docs_index = (ROOT / "docs/README.md").read_text(encoding="utf-8")
+
+    runbook_ref = "docs/runbooks/understand-anything-hermes-bootstrap.md"
+    script_ref = "scripts/bootstrap_understand_anything.py"
+    assert runbook_ref in root_readme
+    assert runbook_ref in docs_index
+    assert script_ref in docs_index
+
+    for phrase in [
+        "git@github.com:Lum1104/Understand-Anything.git",
+        "external method source",
+        "not source of truth",
+        "不 vendor",
+        "~/.understand-anything/repo",
+        "~/.hermes/skills/understand-anything",
+        "hermes skills list",
+        "pnpm --filter @understand-anything/core build",
+        "pnpm --filter @understand-anything/core test",
+    ]:
+        assert phrase in runbook
+
+    for phrase in [
+        "DEFAULT_REPO_URL",
+        "git@github.com:Lum1104/Understand-Anything.git",
+        "--update",
+        "--skip-tests",
+        "understand-anything-plugin/skills",
+        ".hermes/skills/understand-anything",
+        "pnpm --filter @understand-anything/core build",
+    ]:
+        assert phrase in script
 
 
 def test_ai_paper_reproduction_method_is_actionable():
