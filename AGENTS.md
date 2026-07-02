@@ -18,6 +18,7 @@
 - `docs/hermes-harness-algorithm-engineer-playbook.md`：算法工程 / 模型训练方法
 - `docs/playbooks/ai-paper-reproduction.md`：无官方代码或弱开源条件下的 AI 论文系统复现方法
 - `docs/templates/ai-paper-reproduction-project-template.md`：具体论文复现项目的控制面模板
+- `docs/domains/`：领域知识库（搜索等）
 - `docs/playbooks/`：特定项目类型方法
 - `docs/catalog/project-types.md`：如何选择哪个 harness 方法
 - `docs/runbooks/`：如何新增、维护和扩展方法

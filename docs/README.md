@@ -40,6 +40,7 @@
 - `docs/audits/2026-05-20-hermes-runtime-update.md`
 - `docs/audits/2026-06-02-hermes-runtime-update.md`
 - `docs/audits/2026-06-10-hermes-runtime-update.md`
+- `docs/audits/2026-07-02-hermes-runtime-update.md`
 - `docs/decisions/0001-hermes-default-runtime-not-exclusive.md`
 - `docs/decisions/0002-agent-skills-external-method-source.md`
 - `docs/references/agent-skills-crosswalk.md`
@@ -60,6 +61,10 @@
 - `scripts/check_method_update_sources.py`：Hermes / harness / agent-skills 更新源只读检查脚本
 - `docs/templates/project-type-playbook-template.md`
 - `docs/templates/ai-paper-reproduction-project-template.md`
+
+### 领域知识库
+
+- `docs/domains/search/README.md`：Agent 搜索领域知识库 — 搜索栈架构、工具调研、Hermes 配置
 
 ### 健康度
 - `docs/tech-debt-tracker.md`
