@@ -32,6 +32,49 @@
 4. 先定义 review 和 backpressure 规则
 5. 再放大 agent autonomy
 
+## Intake 与 routing
+
+本节是 issue triage 到 agent-ready brief 的 canonical procedure owner。
+
+进入 agent 执行前先验证 claim，而不是把未经确认的 issue 描述直接交给 worker：
+
+1. 复现问题或收集可重复证据；
+2. 补齐相关代码、spec、decision 和最近变更；
+3. 写清 scope、out of scope、acceptance 和验证命令；
+4. 使用 `docs/templates/agent-brief-template.md` 标记为 `agent-ready`、`needs-info` 或 `human-required`；
+5. 只有不再依赖产品/权限/安全决策的工作才进入 agent queue。
+
+状态映射：
+
+| Triage 状态 | 仓库工件动作 | 是否可路由 |
+| --- | --- | --- |
+| `needs-info` | 在 brief 中写明缺失的人类决策/权限/证据 | 否 |
+| `human-required` | 记录必须由人执行的产品、安全或外部系统动作 | 否 |
+| `agent-ready` | scope、acceptance、verification、依赖和副作用范围完整 | 是 |
+| `in-progress` | 记录唯一 owner/claim，防止重复执行 | 否 |
+| `done` | 验证通过并回写 plan/issue 链接 | 不适用 |
+
+创建/关闭外部 issue、修改 assignee/label/milestone、发送通知或写入第三方系统都属于副作用；只有任务授权明确覆盖目标系统与操作范围时才能执行，否则停在 brief/plan 阶段请求确认。
+
+issue tracker 可以保存状态和引用。仓库内 spec、plan 和 decision 是 canonical artifacts；brief 与 handoff 是从这些事实投影出的执行工件，只能链接 canonical 内容，不能成为平行事实源。
+
+默认把活动期工件和所属 plan 放在一起：
+
+- brief：`docs/plans/active/<plan-id>-brief-<work-id>.md`；
+- handoff：`docs/plans/active/<plan-id>-handoff-<YYYY-MM-DD>.md`。
+
+计划完成时，把仍有长期价值的证据和决定归并进 completed plan；删除已被取代的 brief/handoff。只有具备独立审计价值的工件才随计划移动到 `docs/plans/completed/`，并保留同一 `<plan-id>` 前缀。
+
+## 长周期任务地图
+
+当目标会跨多个会话且路线未知时，使用 `docs/runbooks/long-horizon-decision-mapping.md`：
+
+- active plan 写清 Destination、Known reality、Decisions so far、Frontier、Fog 和 Out of scope；
+- decision item 与 implementation item 分开；
+- 默认一个会话只推进一个 frontier decision，独立 research 可以并行；
+- 每个决定都必须产出 spec/ADR/plan 更新，再展开实现任务；
+- `Blocked by` 只表示真实依赖。
+
 ## Hermes 的默认工作方式
 
 - Hermes 可以作为 orchestrator 或某一个角色 agent
@@ -59,7 +102,12 @@
 
 ### 推荐 fan-out review 模式
 
-发布或合并前，如果变更有非平凡风险，可以并发获得三个独立视角：
+发布或合并前，先固定 review base，并始终保留两个独立基础轴：
+
+- standards-reviewer：检查 repo instructions、正确性、安全、可维护性和验证纪律；
+- spec-reviewer：逐条核对目标、范围、非目标和 acceptance evidence。
+
+如果变更有非平凡风险，再并发增加独立风险视角：
 
 - code-reviewer：correctness / readability / architecture / performance
 - security-auditor：secrets / auth / input validation / dependency risk
@@ -71,6 +119,24 @@
 - 标注哪些是必须修复，哪些是建议
 - 记录运行了哪些测试
 - 给出 go/no-go 和 rollback plan
+
+不同轴不得压成一个模糊分数。修复后重跑受影响的轴，直到没有 actionable blocker/major，或剩余 debt 已被显式接受。完整流程见 `docs/runbooks/diff-review.md`。
+
+### Handoff artifact
+
+本节是 session handoff 的 canonical procedure owner。
+
+handoff 使用 `docs/templates/handoff-template.md`，至少包含：
+
+- objective 和 canonical artifact 链接；
+- completed/current/remaining 状态；
+- decisions、blockers 和已运行验证；
+- exact next action；
+- 敏感信息脱敏。
+
+handoff 只引用 spec、plan 和 ADR，不复制全文；否则不同副本会迅速漂移。
+
+仓库内 handoff 是 durable checkpoint。需要把上下文交给临时 runtime/session 时，可以生成 OS 临时目录中的可丢弃 resumption envelope，但它只能引用仓库工件，不能承载唯一决定或状态；恢复后应删除，不进入版本控制。
 
 ### 子代理编排约束
 
@@ -109,3 +175,6 @@
 - handoff 只靠聊天摘要，不回写仓库
 - review 没有明确 gate，只凭主观“看起来可以”
 - 任务并行很多，但没有统一 registry 或 checkpoint
+- 未验证 claim 就标为 agent-ready
+- 把尚未解决的产品决策伪装成实现任务
+- reviewer 没有固定 base，或 Standards/Spec 两条轴互相代替

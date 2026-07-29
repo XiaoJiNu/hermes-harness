@@ -35,6 +35,7 @@
 - `docs/plans/completed/2026-04-29-ai-paper-reproduction-method.md`
 - `docs/plans/completed/2026-05-26-vscode-remote-ssh-ubuntu-runbook.md`
 - `docs/plans/completed/2026-05-28-company-gitlab-proxy-bypass.md`
+- `docs/plans/completed/2026-07-29-mattpocock-skills-method-intake.md`
 - `docs/audits/2026-04-14-initial-state.md`
 - `docs/audits/2026-04-15-hermes-codex-tun-instability.md`
 - `docs/audits/2026-05-20-hermes-runtime-update.md`
@@ -44,7 +45,12 @@
 - `docs/decisions/0001-hermes-default-runtime-not-exclusive.md`
 - `docs/decisions/0002-agent-skills-external-method-source.md`
 - `docs/references/agent-skills-crosswalk.md`
+- `docs/references/mattpocock-skills-crosswalk.md`
 - `docs/references/ai-paper-reproduction-sources.md`
+- `docs/templates/active-plan-template.md`
+- `docs/templates/domain-glossary-template.md`
+- `docs/templates/handoff-template.md`
+- `docs/templates/agent-brief-template.md`
 - `docs/templates/ai-paper-reproduction-project-template.md`
 
 ### 运行手册与模板
@@ -57,9 +63,18 @@
 - `scripts/hermes_codex_runtime_recovery.py`：Hermes + Codex 诊断 / apply 脚本
 - `scripts/bootstrap_understand_anything.py`：Understand-Anything Hermes skills bootstrap 脚本
 - `docs/runbooks/hermes-method-update-sync.md`：Hermes / harness 方法更新同步流程
-- `docs/runbooks/agent-skills-method-intake.md`：agent-skills 外部方法来源 intake 流程
-- `scripts/check_method_update_sources.py`：Hermes / harness / agent-skills 更新源只读检查脚本
+- `docs/runbooks/agent-skills-method-intake.md`：外部 skill pack 方法来源 intake 流程
+- `docs/runbooks/requirements-discovery-and-domain-modeling.md`：需求 grilling、spec synthesis 与领域语言维护
+- `docs/runbooks/dependency-aware-delivery-planning.md`：dependency-aware tracer-bullet 交付计划与 tracker 映射
+- `docs/runbooks/long-horizon-decision-mapping.md`：长周期任务的 destination / frontier / fog 决策地图
+- `docs/runbooks/diff-review.md`：固定 review base 的 Standards / Spec 两轴评审
+- `docs/runbooks/harness-skill-authoring.md`：仓库内 Hermes skill 的采用、编写与验证边界
+- `scripts/check_method_update_sources.py`：Hermes / harness / external skill pack 更新源只读检查脚本
 - `docs/templates/project-type-playbook-template.md`
+- `docs/templates/active-plan-template.md`
+- `docs/templates/domain-glossary-template.md`
+- `docs/templates/handoff-template.md`
+- `docs/templates/agent-brief-template.md`
 - `docs/templates/ai-paper-reproduction-project-template.md`
 
 ### 领域知识库

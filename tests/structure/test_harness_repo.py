@@ -27,13 +27,24 @@ def test_required_control_plane_files_exist():
         "docs/runbooks/understand-anything-hermes-bootstrap.md",
         "docs/runbooks/hermes-method-update-sync.md",
         "docs/runbooks/agent-skills-method-intake.md",
+        "docs/runbooks/requirements-discovery-and-domain-modeling.md",
+        "docs/runbooks/dependency-aware-delivery-planning.md",
+        "docs/runbooks/long-horizon-decision-mapping.md",
+        "docs/runbooks/diff-review.md",
+        "docs/runbooks/harness-skill-authoring.md",
         "docs/decisions/0001-hermes-default-runtime-not-exclusive.md",
         "docs/decisions/0002-agent-skills-external-method-source.md",
         "docs/references/agent-skills-crosswalk.md",
+        "docs/references/mattpocock-skills-crosswalk.md",
         "docs/references/ai-paper-reproduction-sources.md",
+        "docs/templates/active-plan-template.md",
+        "docs/templates/domain-glossary-template.md",
+        "docs/templates/handoff-template.md",
+        "docs/templates/agent-brief-template.md",
         "docs/plans/completed/2026-04-24-hermes-codex-runtime-recovery.md",
         "docs/plans/completed/2026-04-25-hermes-harness-method-sync.md",
         "docs/plans/completed/2026-04-25-agent-skills-method-intake.md",
+        "docs/plans/completed/2026-07-29-mattpocock-skills-method-intake.md",
         "docs/audits/2026-04-14-initial-state.md",
         "docs/tech-debt-tracker.md",
         "docs/QUALITY_SCORE.md",
@@ -73,13 +84,24 @@ def test_docs_index_links_to_key_playbooks_and_runbooks():
         "docs/runbooks/understand-anything-hermes-bootstrap.md",
         "docs/runbooks/hermes-method-update-sync.md",
         "docs/runbooks/agent-skills-method-intake.md",
+        "docs/runbooks/requirements-discovery-and-domain-modeling.md",
+        "docs/runbooks/dependency-aware-delivery-planning.md",
+        "docs/runbooks/long-horizon-decision-mapping.md",
+        "docs/runbooks/diff-review.md",
+        "docs/runbooks/harness-skill-authoring.md",
         "docs/decisions/0002-agent-skills-external-method-source.md",
         "docs/references/agent-skills-crosswalk.md",
+        "docs/references/mattpocock-skills-crosswalk.md",
         "docs/references/ai-paper-reproduction-sources.md",
+        "docs/templates/active-plan-template.md",
+        "docs/templates/domain-glossary-template.md",
+        "docs/templates/handoff-template.md",
+        "docs/templates/agent-brief-template.md",
         "docs/templates/ai-paper-reproduction-project-template.md",
         "docs/plans/completed/2026-04-24-hermes-codex-runtime-recovery.md",
         "docs/plans/completed/2026-04-25-hermes-harness-method-sync.md",
         "docs/plans/completed/2026-04-25-agent-skills-method-intake.md",
+        "docs/plans/completed/2026-07-29-mattpocock-skills-method-intake.md",
         "scripts/hermes_codex_runtime_recovery.py",
         "scripts/bootstrap_understand_anything.py",
         "scripts/check_method_update_sources.py",
@@ -254,3 +276,84 @@ def test_agent_skills_intake_preserves_harness_boundaries():
     assert "agent-skills" in operating_model
     assert "skill / persona / command" in multi_agent
     assert "router persona" in multi_agent
+
+
+def test_mattpocock_skills_intake_is_actionable_and_runtime_agnostic():
+    crosswalk = (ROOT / "docs/references/mattpocock-skills-crosswalk.md").read_text(encoding="utf-8")
+    intake = (ROOT / "docs/runbooks/agent-skills-method-intake.md").read_text(encoding="utf-8")
+    discovery = (ROOT / "docs/runbooks/requirements-discovery-and-domain-modeling.md").read_text(encoding="utf-8")
+    delivery = (ROOT / "docs/runbooks/dependency-aware-delivery-planning.md").read_text(encoding="utf-8")
+    wayfinding = (ROOT / "docs/runbooks/long-horizon-decision-mapping.md").read_text(encoding="utf-8")
+    review = (ROOT / "docs/runbooks/diff-review.md").read_text(encoding="utf-8")
+    active_plan = (ROOT / "docs/templates/active-plan-template.md").read_text(encoding="utf-8")
+    handoff = (ROOT / "docs/templates/handoff-template.md").read_text(encoding="utf-8")
+    brief = (ROOT / "docs/templates/agent-brief-template.md").read_text(encoding="utf-8")
+    source_checker = (ROOT / "scripts/check_method_update_sources.py").read_text(encoding="utf-8")
+
+    for skill_name in [
+        "ask-matt",
+        "diagnosing-bugs",
+        "grill-with-docs",
+        "triage",
+        "improve-codebase-architecture",
+        "setup-matt-pocock-skills",
+        "tdd",
+        "to-spec",
+        "to-tickets",
+        "wayfinder",
+        "implement",
+        "prototype",
+        "research",
+        "domain-modeling",
+        "codebase-design",
+        "code-review",
+        "grill-me",
+        "grilling",
+        "handoff",
+        "teach",
+        "writing-great-skills",
+    ]:
+        assert skill_name in crosswalk
+
+    assert "d574778f94cf620fcc8ce741584093bc650a61d3" in crosswalk
+
+    for boundary in ["source of truth", "disable-model-invocation", "agents/openai.yaml", "reject direct"]:
+        assert boundary in crosswalk
+
+    for phrase in ["--workflow-pack-root", "--workflow-pack-id", "promoted", "package/plugin"]:
+        assert phrase in intake
+        assert phrase in source_checker
+
+    for phrase in ["一次只解决一个决策", "glossary", "ADR", "synthesis"]:
+        assert phrase in discovery
+
+    assert "docs/domains/<domain>/glossary.md" in discovery
+
+    for phrase in [
+        "tracer-bullet",
+        "Blocked by",
+        "expand",
+        "migrate",
+        "contract",
+        "side effects",
+        "agent-brief-template.md",
+    ]:
+        assert phrase in delivery
+
+    for phrase in ["Destination", "Frontier", "Fog", "decision item", "tracer bullet"]:
+        assert phrase in wayfinding
+
+    for phrase in ["Destination", "Decision Frontier", "Fog", "Decision item", "tracer bullet"]:
+        assert phrase in active_plan
+
+    assert "| - | ready |" in active_plan
+
+    for phrase in ["review base", "Standards", "Spec", "fixed-point"]:
+        assert phrase in review
+
+    assert "git ls-files --others --exclude-standard" in review
+
+    assert "Canonical artifacts" in handoff
+    assert "Exact next action" in handoff
+    assert "agent-ready" in brief
+    assert "needs-info" in brief

@@ -19,8 +19,9 @@
 1. 先阅读 `AGENTS.md` 与 `docs/README.md`
 2. 确认本次改动影响哪些 docs surface
 3. 如果是新项目类型，遵循 `docs/runbooks/add-project-type-playbook.md`
-4. 如果是方法更新，记录到相应 playbook / decision / audit
-5. 运行验证：
+4. 如果变化来自 external skill pack，遵循 `docs/runbooks/agent-skills-method-intake.md` 并更新对应 source-specific crosswalk
+5. 如果是方法更新，记录到相应 playbook / decision / audit
+6. 运行验证：
    - `python3 scripts/check_control_plane.py`
    - `python3 -m pytest tests/structure -q`
    - `make test-structure`
@@ -31,3 +32,4 @@
 - 文档必须优先强调仓库工件，而不是依赖聊天记忆
 - 方法必须尽量 runtime-agnostic
 - 如果规则会反复重要，应升级为测试或检查脚本
+- 外部 runtime packaging、invocation metadata 和路径不能未经适配成为本仓库 source of truth

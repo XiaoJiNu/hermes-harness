@@ -1,10 +1,12 @@
-# agent-skills Crosswalk
+# addyosmani/agent-skills Crosswalk
 
 日期：2026-04-25
 
 ## 目的
 
 本文件把 `git@github.com:addyosmani/agent-skills.git` 的方法映射到本仓库的 harness source-of-truth surfaces。
+
+其他来源使用独立 crosswalk；`mattpocock/skills` 见 `docs/references/mattpocock-skills-crosswalk.md`，不要把不同上游的版本、skill 名和采用决定混在同一张表里。
 
 原则：先把外部仓库当作参考来源审查，再把有长期价值的方法改写进本仓库。不要让外部仓库、Claude plugin、slash command 或 session hook 直接成为本仓库的 source of truth。
 

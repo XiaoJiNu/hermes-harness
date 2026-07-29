@@ -61,7 +61,7 @@ python3 scripts/check_method_update_sources.py --fetch --json
 
 然后按 `docs/runbooks/hermes-method-update-sync.md` 过滤“有方法价值”的更新。
 
-如果用户明确要求集成 `agent-skills`，先按：
+如果用户明确要求集成外部 skill pack，先按对应入口检查。例如 `agent-skills`：
 
 ```bash
 python3 scripts/check_method_update_sources.py \
@@ -69,7 +69,7 @@ python3 scripts/check_method_update_sources.py \
   --json
 ```
 
-然后按 `docs/runbooks/agent-skills-method-intake.md` 和 `docs/references/agent-skills-crosswalk.md` 做外部方法 intake。`agent-skills` 只能作为 external method source，不能绕过本仓库 source of truth。
+通用或 nested skill pack 使用 `--workflow-pack-root` 和稳定的 `--workflow-pack-id`。然后按 `docs/runbooks/agent-skills-method-intake.md` 和对应 source-specific crosswalk 做 intake。外部仓库只能作为 external method source，不能绕过本仓库 source of truth。
 
 ### 第 2 步：重建仓库上下文
 
@@ -153,15 +153,16 @@ Hermes 的新功能只有在能稳定提升 harness 方法时才进入本仓库�
 
 ## 外部方法来源采用规则
 
-`agent-skills` 这类仓库属于 external method source。采用时必须遵守：
+`agent-skills`、`mattpocock/skills` 这类仓库属于 external method source。采用时必须遵守：
 
 1. 本仓库仍是 source of truth
 2. 先读 `docs/runbooks/agent-skills-method-intake.md`
-3. 先更新 `docs/references/agent-skills-crosswalk.md` 或说明无需更新
+3. 先更新对应 source-specific crosswalk，例如 `docs/references/agent-skills-crosswalk.md` 或 `docs/references/mattpocock-skills-crosswalk.md`
 4. 区分 `skill / persona / command` 与 hook / plugin runtime packaging
 5. 外部路径必须适配成本仓库路径：`docs/specs/`、`docs/plans/active/`、`docs/runbooks/`、`docs/playbooks/`
 6. copied content 必须满足 license 要求；默认优先提炼和改写方法而不是 vendoring
 7. 完成后运行结构验证和 source checker 测试
+8. 外部 user-invoked / model-invoked metadata 只作为 intake 证据，不假定与 Hermes 调用语义等价
 
 坏的结果包括：
 - 只给泛泛建议，不落到具体文档

@@ -23,8 +23,12 @@
 - `docs/catalog/project-types.md`：如何选择哪个 harness 方法
 - `docs/runbooks/`：如何新增、维护和扩展方法
 - `docs/runbooks/hermes-method-update-sync.md`：如何检查并同步 Hermes / harness 方法更新
-- `docs/runbooks/agent-skills-method-intake.md`：如何 intake agent-skills 这类外部方法来源
-- `docs/references/agent-skills-crosswalk.md`：外部 skill 方法到本仓库 surface 的映射
+- `docs/runbooks/agent-skills-method-intake.md`：如何 intake external skill pack 方法来源
+- `docs/references/agent-skills-crosswalk.md`、`docs/references/mattpocock-skills-crosswalk.md`：source-specific 方法映射
+- `docs/runbooks/requirements-discovery-and-domain-modeling.md`：需求澄清与领域语言
+- `docs/runbooks/dependency-aware-delivery-planning.md`：spec 到可执行垂直切片和依赖图
+- `docs/runbooks/long-horizon-decision-mapping.md`：跨会话任务的 decision-first 路线显影
+- `docs/runbooks/diff-review.md`：Standards / Spec 两轴评审
 - `docs/plans/active/`：当前正在推进的计划
 - `docs/plans/completed/`：已经完成并归档的计划 / 完成记录
 

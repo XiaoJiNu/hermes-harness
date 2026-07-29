@@ -15,6 +15,10 @@
 - `docs/playbooks/deployment-platform.md`
 - `docs/playbooks/multi-agent-product-ops.md`
 - `docs/runbooks/hermes-method-update-sync.md`：检查 Hermes / harness 方法更新并同步有价值增量
+- `docs/runbooks/requirements-discovery-and-domain-modeling.md`：需求澄清、领域术语和 spec synthesis
+- `docs/runbooks/long-horizon-decision-mapping.md`：长周期任务的 destination / frontier / fog 管理
+- `docs/runbooks/diff-review.md`：固定 review base 的 Standards / Spec 两轴评审
+- `docs/templates/active-plan-template.md`：dependency-aware active plan 起点
 
 使用原则：
 - 先按项目类型选择方法

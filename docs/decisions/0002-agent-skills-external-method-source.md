@@ -48,6 +48,10 @@ The integrated method must remain runtime-agnostic. Hermes is the default runtim
 - Runtime-specific packaging stays optional and outside the harness source of truth unless we explicitly add a runtime adapter with rollback and tests.
 - Future external workflow packs should follow the same intake pattern rather than being vendored blindly.
 
+## 2026-07-29 Amendment
+
+`https://github.com/mattpocock/skills` is the second governed external method source under this decision. Its source-specific provenance and dispositions live in `docs/references/mattpocock-skills-crosswalk.md`; the original addyosmani mapping remains in `docs/references/agent-skills-crosswalk.md`. Neither source's plugin/runtime packaging is installed or treated as canonical by this amendment.
+
 ## Verification
 
 A valid integration must pass:

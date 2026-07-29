@@ -22,6 +22,8 @@
 - `docs/catalog/`：项目类型目录与选择规则
 - `docs/playbooks/`：特定项目类型的方法
 - `docs/runbooks/`：维护与扩展流程
+- `docs/templates/`：active plan、handoff、agent brief 等可复制控制面骨架
+- `docs/references/`：外部来源、crosswalk 和长期参考证据
 - `docs/decisions/`：稳定决策
 - `docs/audits/`：阶段性审计
 - `docs/plans/`：执行计划

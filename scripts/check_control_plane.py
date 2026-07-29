@@ -26,13 +26,24 @@ REQUIRED_PATHS = [
     'docs/runbooks/understand-anything-hermes-bootstrap.md',
     'docs/runbooks/hermes-method-update-sync.md',
     'docs/runbooks/agent-skills-method-intake.md',
+    'docs/runbooks/requirements-discovery-and-domain-modeling.md',
+    'docs/runbooks/dependency-aware-delivery-planning.md',
+    'docs/runbooks/long-horizon-decision-mapping.md',
+    'docs/runbooks/diff-review.md',
+    'docs/runbooks/harness-skill-authoring.md',
     'docs/decisions/0001-hermes-default-runtime-not-exclusive.md',
     'docs/decisions/0002-agent-skills-external-method-source.md',
     'docs/references/agent-skills-crosswalk.md',
+    'docs/references/mattpocock-skills-crosswalk.md',
     'docs/references/ai-paper-reproduction-sources.md',
+    'docs/templates/active-plan-template.md',
+    'docs/templates/domain-glossary-template.md',
+    'docs/templates/handoff-template.md',
+    'docs/templates/agent-brief-template.md',
     'docs/plans/completed/2026-04-24-hermes-codex-runtime-recovery.md',
     'docs/plans/completed/2026-04-25-hermes-harness-method-sync.md',
     'docs/plans/completed/2026-04-25-agent-skills-method-intake.md',
+    'docs/plans/completed/2026-07-29-mattpocock-skills-method-intake.md',
     'docs/audits/2026-04-14-initial-state.md',
     'docs/tech-debt-tracker.md',
     'docs/QUALITY_SCORE.md',
@@ -65,13 +76,24 @@ REQUIRED_DOC_INDEX_REFS = [
     'docs/runbooks/understand-anything-hermes-bootstrap.md',
     'docs/runbooks/hermes-method-update-sync.md',
     'docs/runbooks/agent-skills-method-intake.md',
+    'docs/runbooks/requirements-discovery-and-domain-modeling.md',
+    'docs/runbooks/dependency-aware-delivery-planning.md',
+    'docs/runbooks/long-horizon-decision-mapping.md',
+    'docs/runbooks/diff-review.md',
+    'docs/runbooks/harness-skill-authoring.md',
     'docs/decisions/0002-agent-skills-external-method-source.md',
     'docs/references/agent-skills-crosswalk.md',
+    'docs/references/mattpocock-skills-crosswalk.md',
     'docs/references/ai-paper-reproduction-sources.md',
+    'docs/templates/active-plan-template.md',
+    'docs/templates/domain-glossary-template.md',
+    'docs/templates/handoff-template.md',
+    'docs/templates/agent-brief-template.md',
     'docs/templates/ai-paper-reproduction-project-template.md',
     'docs/plans/completed/2026-04-24-hermes-codex-runtime-recovery.md',
     'docs/plans/completed/2026-04-25-hermes-harness-method-sync.md',
     'docs/plans/completed/2026-04-25-agent-skills-method-intake.md',
+    'docs/plans/completed/2026-07-29-mattpocock-skills-method-intake.md',
     'scripts/hermes_codex_runtime_recovery.py',
     'scripts/bootstrap_understand_anything.py',
     'scripts/check_method_update_sources.py',
@@ -141,6 +163,21 @@ def main() -> None:
     ]:
         if required_ref not in entry_doc:
             fail(f'entry doc missing canonical reference: {required_ref}')
+
+    matt_crosswalk = (ROOT / 'docs/references/mattpocock-skills-crosswalk.md').read_text(encoding='utf-8')
+    for required_phrase in ['v1.1.0', 'domain-modeling', 'to-tickets', 'wayfinder', 'disable-model-invocation']:
+        if required_phrase not in matt_crosswalk:
+            fail(f'mattpocock skills crosswalk is missing phrase: {required_phrase}')
+
+    decision_map = (ROOT / 'docs/runbooks/long-horizon-decision-mapping.md').read_text(encoding='utf-8')
+    for required_phrase in ['Destination', 'Frontier', 'Fog', 'decision item', 'tracer bullet']:
+        if required_phrase not in decision_map:
+            fail(f'long-horizon decision mapping runbook is missing phrase: {required_phrase}')
+
+    diff_review = (ROOT / 'docs/runbooks/diff-review.md').read_text(encoding='utf-8')
+    for required_phrase in ['review base', 'Standards', 'Spec', 'fixed-point']:
+        if required_phrase not in diff_review:
+            fail(f'diff review runbook is missing phrase: {required_phrase}')
 
     print('PASS: control plane checks succeeded')
 

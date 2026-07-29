@@ -68,7 +68,16 @@
 - `docs/runbooks/hermes-method-update-sync.md`：如何检查并同步 Hermes / harness 方法更新
 - `docs/runbooks/agent-skills-method-intake.md`：如何把 agent-skills 这类外部 workflow pack 转成 harness 方法
 - `docs/references/agent-skills-crosswalk.md`：agent-skills 方法到本仓库 surface 的映射
-- `scripts/check_method_update_sources.py`：Hermes / harness / agent-skills 更新源只读检查脚本
+- `docs/references/mattpocock-skills-crosswalk.md`：mattpocock/skills promoted 方法的采用、合并与拒绝映射
+- `docs/runbooks/requirements-discovery-and-domain-modeling.md`：需求澄清、spec synthesis、shared language 与 ADR 入口
+- `docs/runbooks/dependency-aware-delivery-planning.md`：把 spec 拆成 tracer-bullet、显式依赖和 agent-ready 工作项
+- `docs/runbooks/long-horizon-decision-mapping.md`：长周期任务的 decision-first 路线显影方法
+- `docs/runbooks/diff-review.md`：Standards / Spec 两轴独立评审方法
+- `docs/runbooks/harness-skill-authoring.md`：把稳定方法包装成仓库内 Hermes skill 的标准流程
+- `docs/templates/active-plan-template.md`：dependency-aware tracer-bullet active plan 模板
+- `docs/templates/handoff-template.md`：跨会话/agent 的 durable handoff 模板
+- `docs/templates/agent-brief-template.md`：经过 claim 验证的 agent-ready 工作简报模板
+- `scripts/check_method_update_sources.py`：Hermes / harness / external skill pack 更新源只读检查脚本
 - `docs/runbooks/add-project-type-playbook.md`：新增项目类型方法的标准流程
 - `docs/runbooks/maintenance-review.md`：持续维护与更新流程
 
